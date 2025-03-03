@@ -1,8 +1,10 @@
+import 'package:elevateu_bcc/Register/RegisterFormMentor.dart';
 import 'package:elevateu_bcc/screens/auth/onBoardingScreen.dart';
 import 'package:elevateu_bcc/screens/auth/recovery/RecoveryEmail.dart';
-import 'package:elevateu_bcc/screens/auth/RegisterScreen.dart';
+import 'package:elevateu_bcc/Register/RegisterScreen.dart';
 import 'package:elevateu_bcc/widgets/TextField.dart';
 import 'package:flutter/material.dart';
+import '../../Register/RegisterFormStudent.dart';
 import '../HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -153,8 +155,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               const Text('Belum punya akun?'),
                               TextButton(onPressed: (){
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(builder: (context) => const Signupscreen()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignupFormMentor(),
+                                  ),
+                                );
                               }, child: const Text('Sign Up')
                               )
                             ],

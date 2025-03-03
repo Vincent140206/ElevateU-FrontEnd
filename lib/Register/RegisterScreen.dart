@@ -1,11 +1,13 @@
 import 'package:elevateu_bcc/screens/auth/LoginScreen.dart';
-import 'package:elevateu_bcc/screens/auth/VerifikasiOTP.dart';
+import 'package:elevateu_bcc/Register/VerifikasiOTP.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/RegisterBloc.dart' as bloc;
-import '../../bloc/Event.dart' as event;
-import '../../bloc/Event.dart';
-import '../../widgets/TextField.dart';
+import 'RegisterFormMentor.dart';
+import 'RegisterFormStudent.dart';
+import 'bloc/RegisterBloc.dart' as bloc;
+import 'bloc/Event.dart' as event;
+import 'bloc/Event.dart';
+import '../widgets/TextField.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});
@@ -256,6 +258,21 @@ class _SignupscreenState extends State<Signupscreen> {
                             role: selectedRole ?? 'student',
                           )
                         );
+                        if(selectedRole == 'student'){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignupFormStudent(),
+                            ),
+                          );
+                        } if(selectedRole == 'mentor') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignupFormMentor(),
+                            ),
+                          );
+                        }
                       }
                     }
                         : null,

@@ -1,15 +1,23 @@
 import 'package:dio/src/dio.dart';
+import 'package:elevateu_bcc/Register/bloc/OTPBloc.dart';
+import 'package:elevateu_bcc/Register/bloc/RegisterBloc.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'bloc/RegisterBloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'screens/auth/SplashScreen.dart';
 
 void main() {
   runApp(
-    Provider<RegisterBloc>(
-      create: (_) => RegisterBloc(Dio()),
-      child: const MyApp(),
-    ),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<OTPBloc>(
+          create: (context) => OTPBloc(Dio()),
+        ),
+        BlocProvider<RegisterBloc>(
+          create: (context) => RegisterBloc(Dio())
+        ),
+      ],
+      child: MyApp(),
+    )
   );
 }
 

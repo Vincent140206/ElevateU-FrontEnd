@@ -151,17 +151,43 @@ class _HomeScreenState extends State<HomeScreen> {
                          ),
                        ],
                      ),
+                     const Spacer(),
                      Container(
                        width: 30,
                        height: 30,
                        decoration: const ShapeDecoration(
-                         color: Color(0xFFEEEEEE),
+                         color: Color(0xFF00678D),
                          shape: OvalBorder(),
                        ),
+                       child: Image.asset(
+                         'assets/images/Titik3.png',
+                         scale: 4,),
                      ),
+                     SizedBox(width: 13,)
                    ],
                  ),
               ),
+              SizedBox(height: 17,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Kategori',
+                      style: TextStyle(
+                          fontSize: 16),
+                    ),
+                    const Spacer(),
+                    Text(
+                      'Selengkapnya',
+                      style: TextStyle(
+                          fontSize: 16),
+                    ),
+                  ],
+                ),
+              )
+
             ],
           ),
         ),
