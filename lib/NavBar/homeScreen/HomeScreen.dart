@@ -1,10 +1,15 @@
-import 'package:elevateu_bcc/homeScreen/lists/rekomendasiList.dart';
-import 'package:elevateu_bcc/homeScreen/lists/skillBoostList.dart';
-import 'package:elevateu_bcc/homeScreen/lists/skillUpgradeList.dart';
+import 'package:elevateu_bcc/skillBoost/SkillBoostScreen.dart';
 import 'package:flutter/material.dart';
+import '../Course.dart';
+import '../Mentor.dart';
+import '../Profile/Profile.dart';
+import '../Search.dart';
 import 'lists/kategoriList.dart';
 import 'lists/mentorList.dart';
+import 'lists/rekomendasiList.dart';
+import 'lists/skillBoostList.dart';
 import 'lists/skillChallengeList.dart';
+import 'lists/skillUpgradeList.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +19,85 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double totalHeight = rekList.length * 90;
+  int selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    const HomeContent(),
+    const SearchScreen(),
+    const MentorScreen(),
+    const CourseScreen(),
+    const ProfileScreen(),
+  ];
+
+  void onItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: _screens[selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/images/Home.png',
+              width: 20,
+              height: 22,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/images/Cari.png',
+              width: 20,
+              height: 22,
+            ),
+            label: 'Cari',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/images/Mentor.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'Mentor',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/images/Kursus.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'Kursus',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/images/Profil.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'Profil',
+          ),
+        ],
+        currentIndex: selectedIndex,
+        selectedItemColor: Color(0XFF193C68),
+        unselectedItemColor: Colors.grey,
+        onTap: onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: true,
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+      ),
+    );
+  }
+}
+class HomeContent extends StatelessWidget {
+  const HomeContent({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 60),
-                          Icon(Icons.notifications, size: 24),
                         ],
                       ),
                     ),
@@ -311,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomeScreen(),
+                                    builder: (context) => SkillBoostScreen(sboost: skillBoost,),
                                   ),
                                 );
                               },
@@ -585,7 +666,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  SizedBox(height: 28,),
+                  SizedBox(height: 23,),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Row(
@@ -599,6 +680,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 210,
                     child: ListView.builder(
+                      padding: EdgeInsets.only(top: 8),
                       itemCount: rekList.length,
                       itemBuilder: (context, index) {
                         final rekomenList = rekList[index];
@@ -651,7 +733,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   const SizedBox(width: 7),
                                   SizedBox(
-                                    width: 200,
+                                    width: 210,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment: MainAxisAlignment.start,
@@ -725,7 +807,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  SizedBox(height: 100,)
+                  SizedBox(height: 23,)
                 ],
               ),
             ],

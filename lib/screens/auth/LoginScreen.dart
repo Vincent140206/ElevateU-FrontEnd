@@ -3,7 +3,8 @@ import 'package:elevateu_bcc/screens/auth/onBoardingScreen.dart';
 import 'package:elevateu_bcc/screens/auth/recovery/RecoveryEmail.dart';
 import 'package:elevateu_bcc/widgets/TextField.dart';
 import 'package:flutter/material.dart';
-import '../../homeScreen/HomeScreen.dart';
+
+import '../../NavBar/homeScreen/HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
