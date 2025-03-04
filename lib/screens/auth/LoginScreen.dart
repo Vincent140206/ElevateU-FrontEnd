@@ -1,11 +1,9 @@
 import 'package:elevateu_bcc/Register/RegisterFormMentor.dart';
 import 'package:elevateu_bcc/screens/auth/onBoardingScreen.dart';
 import 'package:elevateu_bcc/screens/auth/recovery/RecoveryEmail.dart';
-import 'package:elevateu_bcc/Register/RegisterScreen.dart';
 import 'package:elevateu_bcc/widgets/TextField.dart';
 import 'package:flutter/material.dart';
-import '../../Register/RegisterFormStudent.dart';
-import '../HomeScreen.dart';
+import '../../homeScreen/HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,12 +78,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 48,
                               child: TextFields(
                                 controller: usernameController,
-                                hintText: 'Email',
+                                  hintText: 'Email',
+                                  fillColor: const Color(0XFFEEEEEE),
                                 obscureText: false,
                                 color: const Color(0XFFEEEEEE),
                                 borderColor: Colors.transparent,
-                              )
-                          ),
+                                    ),
+                                  ),
                           const SizedBox(height: 32,),
                           const Text('Password',
                             style: TextStyle(
