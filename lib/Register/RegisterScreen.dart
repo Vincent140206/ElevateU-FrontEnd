@@ -1,9 +1,9 @@
-import 'package:elevateu_bcc/screens/auth/LoginScreen.dart';
-import 'package:elevateu_bcc/Register/VerifikasiOTP.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../screens/auth/LoginScreen.dart';
 import 'RegisterFormMentor.dart';
 import 'RegisterFormStudent.dart';
+import 'VerifikasiOTP.dart';
 import 'bloc/RegisterBloc.dart' as bloc;
 import 'bloc/Event.dart' as event;
 import 'bloc/Event.dart';

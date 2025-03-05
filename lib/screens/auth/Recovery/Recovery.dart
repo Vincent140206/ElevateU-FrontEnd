@@ -1,7 +1,8 @@
-import 'package:elevateu_bcc/screens/auth/LoginScreen.dart';
-import 'package:elevateu_bcc/screens/auth/recovery/RecoveryEmail.dart';
-import 'package:elevateu_bcc/widgets/Button.dart';
 import 'package:flutter/material.dart';
+
+import '../../../widgets/Button.dart';
+import '../LoginScreen.dart';
+import 'RecoveryEmail.dart';
 
 class Lupakatasandi extends StatefulWidget {
   const Lupakatasandi({super.key});

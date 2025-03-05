@@ -1,9 +1,10 @@
-import 'package:elevateu_bcc/screens/auth/LoginScreen.dart';
-import 'package:elevateu_bcc/widgets/ElevatedButton.dart';
-import 'package:elevateu_bcc/widgets/PopUp.dart';
+
 import 'package:flutter/material.dart';
 
+import '../../../widgets/ElevatedButton.dart';
+import '../../../widgets/PopUp.dart';
 import '../../../widgets/TextField.dart';
+import '../LoginScreen.dart';
 
 class RecoveryPassword extends StatefulWidget {
   const RecoveryPassword({super.key});

@@ -1,6 +1,5 @@
-import 'package:elevateu_bcc/widgets/TextField.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../widgets/TextField.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

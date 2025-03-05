@@ -1,7 +1,8 @@
-import 'package:elevateu_bcc/screens/auth/recovery/RecoveryPassword.dart';
-import 'package:elevateu_bcc/widgets/ElevatedButton.dart';
-import 'package:elevateu_bcc/widgets/TextField.dart';
 import 'package:flutter/material.dart';
+
+import '../../../widgets/ElevatedButton.dart';
+import '../../../widgets/TextField.dart';
+import 'RecoveryPassword.dart';
 
 class RecoveryEmail extends StatefulWidget {
   const RecoveryEmail({super.key});

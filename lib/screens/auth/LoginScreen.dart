@@ -1,10 +1,11 @@
-import 'package:elevateu_bcc/Register/RegisterFormMentor.dart';
-import 'package:elevateu_bcc/screens/auth/onBoardingScreen.dart';
-import 'package:elevateu_bcc/screens/auth/recovery/RecoveryEmail.dart';
-import 'package:elevateu_bcc/widgets/TextField.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../NavBar/homeScreen/HomeScreen.dart';
+import '../../Register/RegisterFormMentor.dart';
+import '../../widgets/TextField.dart';
+import 'OnBoardingScreen.dart';
+import 'Recovery/RecoveryEmail.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

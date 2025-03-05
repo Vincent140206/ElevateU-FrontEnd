@@ -1,17 +1,16 @@
-
-import 'package:elevateu_bcc/skillBoost/Deskripsi.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../NavBar/homeScreen/lists/skillBoostList.dart';
+import 'Deskripsi.dart';
 
 class SkillBoostScreen extends StatefulWidget {
   final sbList sboost;
 
   const SkillBoostScreen({
-    Key? key,
+    super.key,
     required this.sboost,
-  }) : super(key: key);
+  });
 
   @override
   State<SkillBoostScreen> createState() => _SkillBoostScreenState();

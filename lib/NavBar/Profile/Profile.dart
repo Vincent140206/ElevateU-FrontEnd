@@ -1,6 +1,5 @@
-import 'package:elevateu_bcc/NavBar/Profile/EditProfile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'EditProfile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
