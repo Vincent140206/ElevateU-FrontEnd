@@ -31,4 +31,22 @@ List<sbList> skillBoostList = [
       review: '(4.5) 210 Review',
       imagePath: 'assets/images/SB3.jpeg'
   ),
+  sbList(
+      title: 'Web Development Series',
+      materi: '12 Materi',
+      review: '(4.5) 210 Review',
+      imagePath: 'assets/images/Rekomendasi1.png'
+  ),
+  sbList(
+      title: 'Konsep Internet of Things',
+      materi: '12 Materi',
+      review: '(4.5) 210 Review',
+      imagePath: 'assets/images/IoT.png'
+  ),
+  sbList(
+      title: 'Front-end Fundamental',
+      materi: '12 Materi',
+      review: '(4.5) 210 Review',
+      imagePath: 'assets/images/Rekomendasi3.png'
+  ),
 ];
