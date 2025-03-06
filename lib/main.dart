@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Register/bloc/OTPBloc.dart';
 import 'Register/bloc/RegisterBloc.dart';
-import 'screens/auth/SplashScreen.dart';
+import 'auth/SplashScreen.dart';
 
 void main() {
   runApp(

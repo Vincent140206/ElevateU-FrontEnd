@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../screens/auth/LoginScreen.dart';
+import '../auth/LoginScreen.dart';
 import 'RegisterFormMentor.dart';
 import 'RegisterFormStudent.dart';
 import 'VerifikasiOTP.dart';

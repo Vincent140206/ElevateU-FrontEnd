@@ -1,4 +1,7 @@
+import 'package:elevateu_bcc_new/Payment.dart';
+import 'package:elevateu_bcc_new/skillBoost/RekomendasiSkillBoost.dart';
 import 'package:flutter/material.dart';
+import '../../Premium.dart';
 import '../../skillBoost/SkillBoostScreen.dart';
 import '../Course/Course.dart';
 import '../Mentor.dart';
@@ -24,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const HomeContent(),
     const SearchScreen(),
-    const MentorScreen(),
+    const PremiumScreen(),
     const CourseScreen(),
     const ProfileScreen(),
   ];
@@ -134,54 +137,64 @@ class HomeContent extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 29),
-              Container(
-                padding: const EdgeInsets.only(top: 14, left: 12),
-                height: 100,
-                width: 380,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment(1.00, -0.04),
-                    end: Alignment(-1, 0.04),
-                    colors: [
-                      Color(0XFF1D7899),
-                      Color(0XFF30C8FF),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Column(
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Fundamental Front \nEnd Developer',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
-                                height: 1.40,
-                              ),
-                            ),
-                            SizedBox(height: 6),
-                            Text(
-                              'Yuk lanjutkan progres belajarmu hari ini!',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                height: 1.50,
-                              ),
-                            ),
-                          ],
-                        ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CourseScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(top: 14, left: 12),
+                  height: 100,
+                  width: 380,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment(1.00, -0.04),
+                      end: Alignment(-1, 0.04),
+                      colors: [
+                        Color(0XFF1D7899),
+                        Color(0XFF30C8FF),
                       ],
                     ),
-                  ],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Column(
+                    children: [
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Fundamental Front \nEnd Developer',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.40,
+                                ),
+                              ),
+                              SizedBox(height: 6),
+                              Text(
+                                'Yuk lanjutkan progres belajarmu hari ini!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.50,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -369,7 +382,11 @@ class HomeContent extends StatelessWidget {
                     children: [
                       Text('Skill Boost'),
                       const Spacer(),
-                      Text('Selengkapnya')
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
+                          }, child: Text('Selengkapnya')
+                      )
                     ],
                   ),
                   const SizedBox(height: 17),
@@ -666,14 +683,18 @@ class HomeContent extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(height: 23,),
+                  SizedBox(height: 10,),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Row(
                       children: [
                         Text('Rekomendasi Skill Boost'),
                         const Spacer(),
-                        Text('Selengkapnya')
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => RekomendasiSkillBoost()));
+                            }, child: Text('Selengkapnya')
+                        )
                       ],
                     ),
                   ),

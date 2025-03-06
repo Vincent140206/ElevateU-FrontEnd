@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../screens/auth/LoginScreen.dart';
+import '../auth/LoginScreen.dart';
 import '../widgets/ElevatedButton.dart';
 import '../widgets/PopUp.dart';
 import '../widgets/TextField.dart';

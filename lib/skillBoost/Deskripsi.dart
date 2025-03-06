@@ -20,7 +20,15 @@ class _DeskripsiWidgetState extends State<DeskripsiWidget> {
             children: [
               Text('Deskripsi Materi'),
               Text('Video pembelajaran ini akan membahas dasar-dasar UX Design, '
-                  'mulai dari konsep fundamental, Baca selengkapnya')
+                  'mulai dari konsep fundamental, Baca selengkapnya'),
+              SizedBox(height: 40,),
+              Container(
+                width: 354,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: Color(0XFFA4E6FF),
+                ),
+              )
             ],
           ),
         ),
