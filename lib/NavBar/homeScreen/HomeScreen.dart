@@ -1,9 +1,10 @@
 import 'package:elevateu_bcc_new/NavBar/Search/SearchKategori.dart';
 import 'package:elevateu_bcc_new/skillBoost/RekomendasiSkillBoost.dart';
+import 'package:elevateu_bcc_new/skillChallenge/SkillChallengeWidget.dart';
 import 'package:flutter/material.dart';
 import '../../skillBoost/SkillBoostScreen.dart';
 import '../Course/Course.dart';
-import '../Mentor.dart';
+import '../Mentor/Mentor.dart';
 import '../Profile/Profile.dart';
 import '../Search/Search.dart';
 import 'lists/kategoriList.dart';
@@ -26,9 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const HomeContent(),
     const SearchKategori(),
-    const MentorScreen(),
+    const MentorChat(),
     const CourseScreen(),
-    const ProfileScreen(),
+    const ProfileScreen()
   ];
 
   void onItemTapped(int index) {
@@ -484,7 +485,14 @@ class HomeContent extends StatelessWidget {
                     children: [
                       Text('Skill Challenge'),
                       const Spacer(),
-                      Text('Selengkapnya')
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SkillChallengeWidget()));
+                        },
+                          child: Text(
+                              'Selengkapnya'
+                          )
+                      )
                     ],
                   ),
                   const SizedBox(height: 4),

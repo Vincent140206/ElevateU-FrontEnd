@@ -1,5 +1,5 @@
 import 'package:elevateu_bcc_new/NavBar/homeScreen/HomeScreen.dart';
-import 'package:elevateu_bcc_new/PremiumChoice.dart';
+import 'package:elevateu_bcc_new/Premium/PremiumChoice.dart';
 import 'package:elevateu_bcc_new/widgets/ElevatedButton.dart';
 import 'package:elevateu_bcc_new/widgets/PopUp.dart';
 import 'package:flutter/cupertino.dart';

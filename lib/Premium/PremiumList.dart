@@ -1,4 +1,4 @@
-import 'package:elevateu_bcc_new/Payment.dart';
+import 'package:elevateu_bcc_new/Premium/Payment.dart';
 import 'package:elevateu_bcc_new/widgets/ElevatedButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

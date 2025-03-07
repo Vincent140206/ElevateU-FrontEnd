@@ -1,5 +1,5 @@
 
-import 'package:elevateu_bcc_new/Premium.dart';
+import 'package:elevateu_bcc_new/Premium/Premium.dart';
 import 'package:flutter/material.dart';
 
 import '../../NavBar/homeScreen/HomeScreen.dart';
