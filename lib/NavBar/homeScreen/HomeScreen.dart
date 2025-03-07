@@ -1,6 +1,10 @@
 import 'package:elevateu_bcc_new/NavBar/Search/SearchKategori.dart';
 import 'package:elevateu_bcc_new/skillBoost/RekomendasiSkillBoost.dart';
+import 'package:elevateu_bcc_new/skillBoost/Sertifikat.dart';
+import 'package:elevateu_bcc_new/skillBoost/Ulasan1.dart';
+import 'package:elevateu_bcc_new/skillBoost/Ulasan2.dart';
 import 'package:elevateu_bcc_new/skillChallenge/SkillChallengeWidget.dart';
+import 'package:elevateu_bcc_new/skillGuidance/SkillGuidanceWidget.dart';
 import 'package:flutter/material.dart';
 import '../../skillBoost/SkillBoostScreen.dart';
 import '../Course/Course.dart';
@@ -26,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const HomeContent(),
-    const SearchKategori(),
+    const SkillGuidanceWidget(),
     const MentorChat(),
     const CourseScreen(),
     const ProfileScreen()
@@ -336,7 +340,12 @@ class HomeContent extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                       const Spacer(),
-                      Text('Selengkapnya'),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SkillGuidanceWidget()));
+                        },
+                          child: Text('Selengkapnya')
+                      ),
                     ],
                   ),
                   const SizedBox(height: 4),

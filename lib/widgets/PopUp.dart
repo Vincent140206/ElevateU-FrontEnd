@@ -19,7 +19,10 @@ class PopUp extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
-            color: Colors.white,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: Colors.white,
+            ),
             padding: const EdgeInsets.all(20),
             height: 400,
             width: 272,
