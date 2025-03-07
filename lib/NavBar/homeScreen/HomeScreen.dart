@@ -1,12 +1,11 @@
-import 'package:elevateu_bcc_new/Payment.dart';
+import 'package:elevateu_bcc_new/NavBar/Search/SearchKategori.dart';
 import 'package:elevateu_bcc_new/skillBoost/RekomendasiSkillBoost.dart';
 import 'package:flutter/material.dart';
-import '../../Premium.dart';
 import '../../skillBoost/SkillBoostScreen.dart';
 import '../Course/Course.dart';
 import '../Mentor.dart';
 import '../Profile/Profile.dart';
-import '../Search.dart';
+import '../Search/Search.dart';
 import 'lists/kategoriList.dart';
 import 'lists/mentorList.dart';
 import 'lists/rekomendasiList.dart';
@@ -26,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const HomeContent(),
-    const SearchScreen(),
-    const PremiumScreen(),
+    const SearchKategori(),
+    const MentorScreen(),
     const CourseScreen(),
     const ProfileScreen(),
   ];
@@ -417,7 +416,7 @@ class HomeContent extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 122,
+                                    height: 110,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(10),

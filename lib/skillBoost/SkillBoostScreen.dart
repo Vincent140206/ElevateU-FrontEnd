@@ -1,7 +1,9 @@
+import 'package:elevateu_bcc_new/skillBoost/MateriSkillBoost.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../NavBar/homeScreen/lists/skillBoostList.dart';
 import 'Deskripsi.dart';
+import 'Video.dart';
 
 class SkillBoostScreen extends StatefulWidget {
   final sbList sboost;
@@ -99,7 +101,10 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
                             children: [
                               Text(
                                 widget.sboost.title,
-                                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               const Text('Roseanne Park, UX Designer'),
                               const SizedBox(height: 8),
@@ -135,40 +140,215 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
                                   const Text('345 Murid'),
                                 ],
                               ),
-                              SizedBox(height: 10,),
+                              const SizedBox(height: 10),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Spacer(),
+                                  const Spacer(),
                                   TextButton(
-                                    onPressed: (){
+                                    onPressed: () {
                                       DeskripsiWidget();
                                     },
-                                    child: Text(
-                                        'Deskripsi'
-                                    ),
+                                    child: const Text('Deskripsi'),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   TextButton(
-                                    onPressed: (){
-
-                                    },
-                                    child: Text(
-                                        'Sertifikat'
-                                    ),
+                                    onPressed: () {},
+                                    child: const Text('Sertifikat'),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   TextButton(
-                                    onPressed: (){
-
-                                    },
-                                    child: Text(
-                                        'Ulasan'
-                                    ),
+                                    onPressed: () {},
+                                    child: const Text('Ulasan'),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                 ],
-                              )
+                              ),
+                              const Text(
+                                'Deskripsi Materi ',
+                                style: TextStyle (
+                                  color: Color(0xFF141414),
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.40,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Video pembelajaran ini akan membahas dasar-dasar UX Design, mulai dari konsep fundamental, ',
+                                      style: TextStyle(
+                                        color: Color(0xFF5B5B5B),
+                                        fontSize: 14,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.50,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: 'Baca selengkapnya',
+                                      style: TextStyle(
+                                        color: Color(0xFF2E68B3),
+                                        fontSize: 14,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.40,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: materiSB.length,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  final materi = materiSB[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: Container(
+                                      width: double.maxFinite,
+                                      height: 65,
+                                      decoration: BoxDecoration(
+                                        color: materi.jenis == 'Video'
+                                            ? const Color(0xFFA4E6FF)
+                                            : const Color(0xFF1F80A2),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: materi.jenis == 'Video'
+                                          ? Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 12, top: 8, bottom: 8, right: 12),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 28,
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0xFF30C8FF),
+                                                    borderRadius: BorderRadius.circular(50),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      materi.id,
+                                                      style: const TextStyle(color: Colors.black),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      materi.title,
+                                                      style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontFamily: 'Poppins',
+                                                        fontWeight: FontWeight.w600,
+                                                        height: 1.40,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 4),
+                                                    Text.rich(
+                                                      TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text: '00.00 / ',
+                                                            style: const TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: 14,
+                                                              fontFamily: 'Poppins',
+                                                              fontWeight: FontWeight.w400,
+                                                              height: 1.40,
+                                                            ),
+                                                          ),
+                                                          TextSpan(
+                                                            text: materi.durasi,
+                                                            style: const TextStyle(
+                                                              color: Colors.black,
+                                                              fontSize: 14,
+                                                              fontFamily: 'Poppins',
+                                                              fontWeight: FontWeight.w400,
+                                                              height: 1.40,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Spacer(),
+                                                Container(
+                                                  width: 28,
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0xFF30C8FF),
+                                                    borderRadius: BorderRadius.circular(50),
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.play_arrow,
+                                                    size: 20,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                          : Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 12, top: 8, bottom: 8, right: 12),
+                                            child: Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/BukuPensil.png',
+                                                  width: 40,
+                                                  height: 38,
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      'Catatan',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 17,
+                                                        fontFamily: 'Poppins',
+                                                        fontWeight: FontWeight.w600,
+                                                        height: 1.40,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 4),
+                                                    Text(materi.title),
+                                                  ],
+                                                ),
+                                                Spacer(),
+                                                Image.asset(
+                                                    'assets/icons/Ceklis.png',
+                                                  width: 20,
+                                                  height: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ],
                           ),
                         ),
@@ -192,6 +372,24 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
                 ),
               ),
             ),
+          ),
+          Positioned(
+              top: 200,
+              left: 150,
+              right: 150,
+              child: Opacity(
+                opacity: _backButtonOpacity,
+                child: GestureDetector(
+                  onTap: _isBackButtonEnabled ?  () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SBVideo(sboost: widget.sboost)));
+                  } : null,
+                  child: Image.asset(
+                    'assets/images/Play.png',
+                    width: 76,
+                    height: 76,
+                  ),
+                ),
+              )
           ),
         ],
       ),

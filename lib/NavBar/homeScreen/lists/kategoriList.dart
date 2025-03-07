@@ -25,4 +25,20 @@ List<KategoriList> kategoriList= [
     name: 'Business',
     iconPath: 'assets/icons/Business.png',
   ),
+  KategoriList(
+    name: 'Design',
+    iconPath: 'assets/icons/Design.png',
+  ),
+  KategoriList(
+    name: 'Technology',
+    iconPath: 'assets/icons/Technology.png',
+  ),
+  KategoriList(
+    name: 'Pengembangan \nPersonal',
+    iconPath: 'assets/icons/PengembanganPersonal.png',
+  ),
+  KategoriList(
+    name: 'Pembelajaran',
+    iconPath: 'assets/icons/Pembelajaran.png',
+  ),
 ];
