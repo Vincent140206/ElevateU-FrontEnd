@@ -1,8 +1,8 @@
-import 'package:elevateu_bcc_new/skillBoost/MateriSkillBoost.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../NavBar/homeScreen/lists/skillBoostList.dart';
-import 'Deskripsi.dart';
+import 'MateriSkillBoost.dart';
+import 'Sertifikat.dart';
+import 'Ulasan1.dart';
 import 'Video.dart';
 
 class SkillBoostScreen extends StatefulWidget {
@@ -21,6 +21,9 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
   late ScrollController _scrollController;
   double _backButtonOpacity = 1.0;
   bool _isBackButtonEnabled = true;
+
+  // State variable to track the selected tab
+  String _selectedTab = 'Deskripsi';
 
   @override
   void initState() {
@@ -147,60 +150,62 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
                                   const Spacer(),
                                   TextButton(
                                     onPressed: () {
-                                      DeskripsiWidget();
+                                      setState(() {
+                                        _selectedTab = 'Deskripsi';
+                                      });
                                     },
                                     child: const Text('Deskripsi'),
                                   ),
                                   const Spacer(),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        _selectedTab = 'Sertifikat';
+                                      });
+                                    },
                                     child: const Text('Sertifikat'),
                                   ),
                                   const Spacer(),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        _selectedTab = 'Ulasan';
+                                      });
+                                    },
                                     child: const Text('Ulasan'),
                                   ),
                                   const Spacer(),
                                 ],
                               ),
-                              const Text(
-                                'Deskripsi Materi ',
-                                style: TextStyle (
-                                  color: Color(0xFF141414),
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.40,
+                              const SizedBox(height: 20),
+                              if (_selectedTab == 'Deskripsi') ...[
+                                const Text(
+                                  'Deskripsi Materi ',
+                                  style: TextStyle(
+                                    color: Color(0xFF141414),
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.40,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Video pembelajaran ini akan membahas dasar-dasar UX Design, mulai dari konsep fundamental, ',
-                                      style: TextStyle(
-                                        color: Color(0xFF5B5B5B),
-                                        fontSize: 14,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.50,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: 'Baca selengkapnya',
-                                      style: TextStyle(
-                                        color: Color(0xFF2E68B3),
-                                        fontSize: 14,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.40,
-                                      ),
-                                    ),
-                                  ],
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Video pembelajaran ini akan membahas dasar-dasar UX Design, '
+                                      'mulai dari konsep fundamental, Baca selengkapnya',
+                                  style: TextStyle(
+                                    color: Color(0xFF5B5B5B),
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.50,
+                                  ),
                                 ),
-                              ),
+                              ] else if (_selectedTab == 'Sertifikat') ...[
+                                const SertifikatWidget(),
+                              ] else if (_selectedTab == 'Ulasan') ...[
+                                const UlasanWidget1(),
+                              ],
                               const SizedBox(height: 20),
                               ListView.builder(
                                 padding: EdgeInsets.zero,
@@ -260,26 +265,26 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
                                                     Text.rich(
                                                       TextSpan(
                                                         children: [
-                                                          TextSpan(
-                                                            text: '00.00 / ',
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 14,
-                                                              fontFamily: 'Poppins',
-                                                              fontWeight: FontWeight.w400,
-                                                              height: 1.40,
-                                                            ),
-                                                          ),
-                                                          TextSpan(
-                                                            text: materi.durasi,
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 14,
-                                                              fontFamily: 'Poppins',
-                                                              fontWeight: FontWeight.w400,
-                                                              height: 1.40,
-                                                            ),
-                                                          ),
+                                                        TextSpan(
+                                                        text: '00.00 / ',
+                                                        style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight: FontWeight.w400,
+                                                          height: 1.40,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text: materi.durasi,
+                                                        style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight: FontWeight.w400,
+                                                          height: 1.40,
+                                                        ),
+                                                      )
                                                         ],
                                                       ),
                                                     ),
@@ -334,9 +339,9 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
                                                     Text(materi.title),
                                                   ],
                                                 ),
-                                                Spacer(),
+                                                const Spacer(),
                                                 Image.asset(
-                                                    'assets/icons/Ceklis.png',
+                                                  'assets/icons/Ceklis.png',
                                                   width: 20,
                                                   height: 20,
                                                 ),
@@ -374,22 +379,22 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
             ),
           ),
           Positioned(
-              top: 200,
-              left: 150,
-              right: 150,
-              child: Opacity(
-                opacity: _backButtonOpacity,
-                child: GestureDetector(
-                  onTap: _isBackButtonEnabled ?  () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SBVideo(sboost: widget.sboost)));
-                  } : null,
-                  child: Image.asset(
-                    'assets/images/Play.png',
-                    width: 76,
-                    height: 76,
-                  ),
+            top: 200,
+            left: 150,
+            right: 150,
+            child: Opacity(
+              opacity: _backButtonOpacity,
+              child: GestureDetector(
+                onTap: _isBackButtonEnabled ? () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SBVideo(sboost: widget.sboost)));
+                } : null,
+                child: Image.asset(
+                  'assets/images/Play.png',
+                  width: 76,
+                  height: 76,
                 ),
-              )
+              ),
+            ),
           ),
         ],
       ),

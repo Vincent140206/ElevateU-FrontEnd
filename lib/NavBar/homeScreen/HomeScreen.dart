@@ -382,10 +382,13 @@ class HomeContent extends StatelessWidget {
                     children: [
                       Text('Skill Boost'),
                       const Spacer(),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
-                          }, child: Text('Selengkapnya')
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => RekomendasiSkillBoost()));
+                          },
+                          child: Text(
+                              'Selengkapnya'
+                          )
                       )
                     ],
                   ),
@@ -697,10 +700,13 @@ class HomeContent extends StatelessWidget {
                       children: [
                         Text('Rekomendasi Skill Boost'),
                         const Spacer(),
-                        TextButton(
-                            onPressed: () {
+                        GestureDetector(
+                            onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => RekomendasiSkillBoost()));
-                            }, child: Text('Selengkapnya')
+                            },
+                            child: Text(
+                                'Selengkapnya'
+                            )
                         )
                       ],
                     ),
