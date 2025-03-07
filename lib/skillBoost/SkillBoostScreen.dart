@@ -22,7 +22,6 @@ class _SkillBoostScreenState extends State<SkillBoostScreen> {
   double _backButtonOpacity = 1.0;
   bool _isBackButtonEnabled = true;
 
-  // State variable to track the selected tab
   String _selectedTab = 'Deskripsi';
 
   @override
