@@ -5,8 +5,8 @@ import 'RegisterFormMentor.dart';
 import 'RegisterFormStudent.dart';
 import 'VerifikasiOTP.dart';
 import 'bloc/RegisterBloc.dart' as bloc;
-import 'bloc/Event.dart' as event;
-import 'bloc/Event.dart';
+import 'bloc/AuthEvent.dart' as event;
+import 'bloc/AuthEvent.dart';
 import '../widgets/TextField.dart';
 
 class Signupscreen extends StatefulWidget {

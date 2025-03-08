@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Event.dart';
+import 'AuthEvent.dart';
 
 class OTPBloc extends Bloc<OtpEvent, OtpState> {
   final Dio dio;

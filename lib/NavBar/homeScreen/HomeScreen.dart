@@ -1,8 +1,8 @@
 import 'package:elevateu_bcc_new/NavBar/Search/SearchKategori.dart';
 import 'package:elevateu_bcc_new/skillBoost/RekomendasiSkillBoost.dart';
-import 'package:elevateu_bcc_new/skillBoost/Sertifikat.dart';
-import 'package:elevateu_bcc_new/skillBoost/Ulasan1.dart';
-import 'package:elevateu_bcc_new/skillBoost/Ulasan2.dart';
+import 'package:elevateu_bcc_new/skillBoost/state/Sertifikat.dart';
+import 'package:elevateu_bcc_new/skillBoost/state/Ulasan1.dart';
+import 'package:elevateu_bcc_new/skillBoost/state/Ulasan2.dart';
 import 'package:elevateu_bcc_new/skillChallenge/SkillChallengeWidget.dart';
 import 'package:elevateu_bcc_new/skillGuidance/SkillGuidanceWidget.dart';
 import 'package:flutter/material.dart';

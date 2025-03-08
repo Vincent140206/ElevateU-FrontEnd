@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../NavBar/homeScreen/lists/skillBoostList.dart';
 import 'MateriSkillBoost.dart';
-import 'Sertifikat.dart';
-import 'Ulasan1.dart';
+import 'state/Sertifikat.dart';
+import 'state/Ulasan1.dart';
 import 'Video.dart';
 
 class SkillBoostScreen extends StatefulWidget {

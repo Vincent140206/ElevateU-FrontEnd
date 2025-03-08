@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Event.dart';
+import 'AuthEvent.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final Dio dio;
