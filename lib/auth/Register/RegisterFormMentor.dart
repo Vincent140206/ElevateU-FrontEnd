@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import '../auth/LoginScreen.dart';
-import '../widgets/ElevatedButton.dart';
-import '../widgets/PopUp.dart';
-import '../widgets/TextField.dart';
+import '../../widgets/ElevatedButton.dart';
+import '../../widgets/PopUp.dart';
+import '../../widgets/TextField.dart';
+import '../LoginScreen.dart';
 
 class SignupFormMentor extends StatefulWidget {
-  const SignupFormMentor({super.key});
+  final String name;
+  final String email;
+  final String password;
+
+  const SignupFormMentor({super.key, required this.name, required this.email, required this.password});
 
   @override
   State<SignupFormMentor> createState() => _SignupFormMentorState();

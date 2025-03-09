@@ -1,12 +1,10 @@
-
 import 'package:elevateu_bcc_new/Premium/Premium.dart';
+import 'package:elevateu_bcc_new/auth/Register/RegisterFormStudent.dart';
 import 'package:flutter/material.dart';
-
-import '../../NavBar/homeScreen/HomeScreen.dart';
-import '../../Register/RegisterFormMentor.dart';
 import '../../widgets/TextField.dart';
 import 'OnBoardingScreen.dart';
 import 'Recovery/RecoveryEmail.dart';
+import 'Register/RegisterScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -161,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const SignupFormMentor(),
+                                    builder: (context) => Signupscreen(),
                                   ),
                                 );
                               }, child: const Text('Sign Up')

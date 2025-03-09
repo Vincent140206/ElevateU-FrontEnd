@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,12 +12,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterSubmitted>((event, emit) async {
       emit(RegisterLoading());
       try {
-        if (event.email.isEmpty || event.name.isEmpty || event.password.isEmpty) {
-          emit(RegisterFailure(error: 'All fields are required'));
-          return;
-        }
-
-        final response = await dio.post('https://elevateu.nathakusuma.com/api/v1/auth/register/otp', data: {
+        final response = await dio.post('https://elevateu.nathakusuma.com/api/v1/auth/register/otp',
+            data: {
           "email": event.email,
         });
 
@@ -26,8 +23,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           await prefs.setString('email', event.email);
           await prefs.setString('password', event.password);
           await prefs.setString('role', event.role);
+          debugPrint('Sukses');
           emit(RegisterSuccess());
         } else if (response.statusCode == 400) {
+          debugPrint('Udah ada');
           emit(RegisterFailure(error: 'Invalid email or user already exists'));
         } else {
           emit(RegisterFailure(error: 'Registration failed with status code: ${response.statusCode}'));
@@ -35,6 +34,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       } on DioException catch (dioError) {
         emit(RegisterFailure(error: dioError.message.toString()));
       } catch (e) {
+        debugPrint('Error occurred: $e');
         emit(RegisterFailure(error: 'An unexpected error occurred: ${e.toString()}'));
       }
     });

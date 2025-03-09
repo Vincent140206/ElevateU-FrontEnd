@@ -151,10 +151,7 @@ class OnboardingState extends State<Onboarding> {
                               ),
                             ),
                             if (data['dot'] != null)
-                              ImageIcon(
-                                AssetImage(data['dot']!),
-                                size: 42,
-                              ),
+                              Image.asset(data['dot']!, width: 42, height: 8,),
                             TextButton(
                               onPressed: () {
                                 if (index < onboardingData.length - 1) {
