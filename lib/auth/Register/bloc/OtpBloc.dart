@@ -1,3 +1,4 @@
+import 'package:elevateu_bcc_new/core/constant/api_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
@@ -30,23 +31,23 @@ class OTPBloc extends Bloc<OtpEvent, OtpState> {
         debugPrint('Major: $jurusan');
 
         final response = await dio.post(
-          'https://elevateu.nathakusuma.com/api/v1/auth/register',
-          data: {
-            "email": email,
-            "otp": otp,
-            "name": name,
-            "password": password,
-            "role": role,
-            "student": {
-              "instance": university,
-              "major": jurusan,
-            },
-            "mentor": {
-              "specialization": '',
-              "experience": '',
-              "price": ''
+            ApiConstant.register,
+            data: {
+              "email": email,
+              "otp": otp,
+              "name": name,
+              "password": password,
+              "role": role,
+              "student": {
+                "instance": university,
+                "major": jurusan,
+              },
+              "mentor": {
+                "specialization": '',
+                "experience": '',
+                "price": ''
+              }
             }
-          }
         );
 
         if (response.statusCode == 201) {

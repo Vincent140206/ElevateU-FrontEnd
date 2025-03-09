@@ -6,7 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/ElevatedButton.dart';
 import '../../widgets/TextField.dart';
 import 'bloc/AuthEvent.dart';
-import 'bloc/OTPBloc.dart';
+import 'bloc/OtpBloc.dart';
+import 'bloc/RegisterBloc.dart';
 import 'bloc/RegisterBloc.dart';
 
 class VerifikasiOtp extends StatefulWidget {

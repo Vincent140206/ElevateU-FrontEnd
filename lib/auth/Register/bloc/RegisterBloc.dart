@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:elevateu_bcc_new/core/constant/api_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,10 +13,11 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterSubmitted>((event, emit) async {
       emit(RegisterLoading());
       try {
-        final response = await dio.post('https://elevateu.nathakusuma.com/api/v1/auth/register/otp',
+        final response = await dio.post(
+            ApiConstant.otp,
             data: {
-          "email": event.email,
-        });
+              "email": event.email,
+            });
 
         if (response.statusCode == 204) {
           final prefs = await SharedPreferences.getInstance();
