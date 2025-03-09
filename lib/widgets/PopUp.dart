@@ -47,18 +47,43 @@ class PopUp extends StatelessWidget {
                 Text(
                   deskripsi,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(
+                    color: Color(0xFF141414),
+                    fontSize: 14,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    height: 1.40,
+                  ),
                 ),
-                const SizedBox(height: 5),
-                ElevatedButton(
-                  onPressed: () {
+                const SizedBox(height: 15),
+                GestureDetector(
+                  onTap: () {
                     Navigator.of(context).pop();
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff007BFF),
+                  child: Container(
+                    width: 147,
+                    padding: const EdgeInsets.all(10),
+                    decoration: ShapeDecoration(
+                      color: Color(0xFF00678C),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Center(
+                        child: const Text(
+                          'Lanjut',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 1.40,
+                          ),
+                        )
+                    ),
                   ),
-                  child: const Text('Lanjut'),
-                ),
+                )
               ],
             ),
           ),

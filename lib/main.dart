@@ -1,9 +1,10 @@
 import 'package:dio/src/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'auth/Register/bloc/OtpBloc.dart';
-import 'auth/Register/bloc/RegisterBloc.dart';
-import 'auth/SplashScreen.dart';
+import 'features/auth/bloc/LoginBloc.dart';
+import 'features/auth/bloc/OtpBloc.dart';
+import 'features/auth/bloc/RegisterBloc.dart';
+import 'features/auth/view/SplashScreen.dart';
 
 void main() {
   runApp(
@@ -14,6 +15,9 @@ void main() {
         ),
         BlocProvider<RegisterBloc>(
           create: (context) => RegisterBloc(Dio())
+        ),
+        BlocProvider<LoginBloc>(
+            create: (context) => LoginBloc(Dio())
         ),
       ],
       child: MyApp(),
