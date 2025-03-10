@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:elevateu_bcc_new/core/constant/api_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/services/local_storage_service.dart';
 import 'LoginEvent.dart';
@@ -38,20 +39,32 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             user['role'],
             user['avatar_url'],
             user['student']['instance'],
-            user['student']['major'],
-            user['mentor']['specializausertion'],
-            user['mentor']['experience'],
-            user['mentor']['rating'],
-            user['mentor']['rating_count'],
-            user['mentor']['price'],
+            user['student']['major']
           );
+          debugPrint('simpen data sukses!');
+          final prefs = await SharedPreferences.getInstance();
+          String? email = prefs.getString('email');
+          String? otp = prefs.getString('otp');
+          String? name = prefs.getString('name');
+          String? password = prefs.getString('password');
+          String? role = prefs.getString('role');
+          String? university = prefs.getString('university');
+          String? jurusan = prefs.getString('jurusan');
 
+          debugPrint('Email: $email');
+          debugPrint('OTP: $otp');
+          debugPrint('Name: $name');
+          debugPrint('Password: $password');
+          debugPrint('Role: $role');
+          debugPrint('University: $university');
+          debugPrint('Major: $jurusan');
           emit(LoginSuccess());
         } else {
           emit(LoginFailure(error: 'Login gagal, silakan coba lagi.'));
         }
       } catch (e) {
-        emit(LoginFailure(error: 'Terjadi kesalahan, silakan coba lagi.'));
+        debugPrint('Error : ${e.toString()}');
+        emit(LoginFailure(error: 'Terjadi kesalahan, ${e.toString()} silakan coba lagi.'));
       }
     });
   }

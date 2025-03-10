@@ -66,11 +66,6 @@ class LocalStorageService {
       String avatarUrl,
       String instance,
       String major,
-      String specialization,
-      String experience,
-      String rating,
-      String ratingCount,
-      String price
       )
   async {
     final prefs = await SharedPreferences.getInstance();
@@ -81,10 +76,5 @@ class LocalStorageService {
     await prefs.setString('avatar_url', avatarUrl);
     await prefs.setString('student_instance', instance);
     await prefs.setString('student_major', major);
-    await prefs.setString('mentor_specialization', specialization);
-    await prefs.setString('mentor_experience', experience);
-    await prefs.setDouble('mentor_rating', rating as double);
-    await prefs.setInt('mentor_rating_count', ratingCount as int);
-    await prefs.setInt('mentor_price', price as int);
   }
 }
