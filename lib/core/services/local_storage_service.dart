@@ -77,4 +77,10 @@ class LocalStorageService {
     await prefs.setString('student_instance', instance);
     await prefs.setString('student_major', major);
   }
+
+  // simpen email (reset password)
+  Future<void> saveEmail (String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', email);
+  }
 }
