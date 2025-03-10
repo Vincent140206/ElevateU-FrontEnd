@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:elevateu_bcc_new/core/services/auth_services.dart';
-import 'package:elevateu_bcc_new/core/services/local_storage_service.dart';
+import 'package:elevateu_bcc_new/features/auth/view/Recovery/Recovery.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../widgets/ElevatedButton.dart';
 import '../../../../widgets/TextField.dart';
-import 'RecoveryPassword.dart';
 
 class RecoveryEmail extends StatefulWidget {
   const RecoveryEmail({super.key});
@@ -17,12 +15,8 @@ class RecoveryEmail extends StatefulWidget {
 
 class RecoveryEmailState extends State<RecoveryEmail> {
   final TextEditingController emailController = TextEditingController();
+  final AuthServices authServices = AuthServices();
   final Dio dio = Dio();
-
-  void saveEmail() async {
-    final localStorageService = LocalStorageService();
-    await localStorageService.saveEmail(emailController.text);
-  }
 
   void validateAndProceed() async {
     if(emailController.text.isEmpty) {
@@ -32,18 +26,21 @@ class RecoveryEmailState extends State<RecoveryEmail> {
       debugPrint('Validation failed: Address is empty');
       return;
     }
-    saveEmail();
     String email = '';
     final prefs = await SharedPreferences.getInstance();
     email = prefs.getString('email') ?? '';
     debugPrint('Loaded email: $email');
 
     try {
-      await resetPasswordOtp (email);
+      await authServices.resetPasswordOtp(context, email);
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const ResetVerifikasiOtp()),
+      );
+    } catch(e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
     }
-
-
-
 }
 
   @override
@@ -120,9 +117,7 @@ class RecoveryEmailState extends State<RecoveryEmail> {
                     height: 48,
                     tulisan: 'Verifikasi Kode',
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const RecoveryPassword()),
-                      );
+                      validateAndProceed();
                     },
                   ),
                 ],

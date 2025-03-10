@@ -40,9 +40,8 @@ class LocalStorageService {
   }
 
   //simpen data student
-  Future<void> saveStudentData(String address, String university, String jurusan) async {
+  Future<void> saveStudentData(String university, String jurusan) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('address', address);
     await prefs.setString('university', university);
     await prefs.setString('jurusan', jurusan);
   }
@@ -82,5 +81,16 @@ class LocalStorageService {
   Future<void> saveEmail (String email) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('email', email);
+  }
+
+  //simpen otp (reset password)
+  Future<void> saveOtp(String otp) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('otp', otp);
+  }
+
+  Future<String?> getOtp() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('otp');
   }
 }

@@ -16,27 +16,18 @@ class SignupFormStudent extends StatefulWidget {
 }
 
 class SignupFormState extends State<SignupFormStudent> {
-  final TextEditingController addressController = TextEditingController();
   final TextEditingController universityController = TextEditingController();
   final TextEditingController jurusanController = TextEditingController();
 
   Future<void> saveStudentData() async{
     final localStorageService = LocalStorageService();
     await localStorageService.saveStudentData(
-        addressController.text,
         universityController.text,
         jurusanController.text
     );
   }
 
   void _validateAndProceed() async {
-    if (addressController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Alamat tidak boleh kosong')),
-      );
-      debugPrint('Validation failed: Address is empty');
-      return;
-    }
     if (universityController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Universitas tidak boleh kosong')),
@@ -125,16 +116,6 @@ class SignupFormState extends State<SignupFormStudent> {
                       ),
                     ),
                     const SizedBox(height: 34),
-                    const Text('Alamat'),
-                    const SizedBox(height: 12),
-                    TextFields(
-                      controller: addressController,
-                      hintText: 'Masukan alamat',
-                      obscureText: false,
-                      color: const Color(0XFFEEEEEE),
-                      borderColor: Colors.transparent,
-                    ),
-                    const SizedBox(height: 12),
                     const Text('Universitas'),
                     const SizedBox(height: 12),
                     TextFields(

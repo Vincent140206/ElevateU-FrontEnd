@@ -7,4 +7,5 @@ class ApiConstant {
   static const String refresh = "$baseUrl/auth/refresh";
   static const String logout = "$baseUrl/auth/logout";
   static const String resetPasswordOtp = "$baseUrl/auth/reset-password/otp";
+  static const String resetPassword = "$baseUrl/auth/reset-password";
 }
