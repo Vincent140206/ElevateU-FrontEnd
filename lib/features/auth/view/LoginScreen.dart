@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else if (state is LoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
+            SnackBar(content: Text('Password atau Email salah, silakan coba lagi')),
           );
         }
       },

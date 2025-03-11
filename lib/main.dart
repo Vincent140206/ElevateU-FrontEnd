@@ -1,12 +1,24 @@
 import 'package:dio/src/dio.dart';
+import 'package:elevateu_bcc_new/core/services/local_storage_service.dart';
+import 'package:elevateu_bcc_new/core/services/user_services.dart';
+import 'package:elevateu_bcc_new/features/auth/bloc/auth_bloc.dart';
+import 'package:elevateu_bcc_new/features/user/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/auth/bloc/LoginBloc.dart';
 import 'features/auth/bloc/OtpBloc.dart';
 import 'features/auth/bloc/RegisterBloc.dart';
 import 'features/auth/view/SplashScreen.dart';
+import 'package:elevateu_bcc_new/core/services/api.dart';
 
-void main() {
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  UserServices userServices = UserServices();
+  LocalStorageService localStorageService = LocalStorageService();
+  Api api = await Api.create();
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -14,14 +26,20 @@ void main() {
           create: (context) => OTPBloc(Dio()),
         ),
         BlocProvider<RegisterBloc>(
-          create: (context) => RegisterBloc(Dio())
+          create: (context) => RegisterBloc(Dio()),
         ),
         BlocProvider<LoginBloc>(
-            create: (context) => LoginBloc(Dio())
+          create: (context) => LoginBloc(Dio()),
+        ),
+        BlocProvider<UserBloc>(
+          create: (context) => UserBloc(Dio(), userServices, api),
+        ),
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(Dio(), localStorageService),
         ),
       ],
       child: MyApp(),
-    )
+    ),
   );
 }
 

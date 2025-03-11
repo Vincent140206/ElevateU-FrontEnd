@@ -19,3 +19,5 @@ class ResetPasswordSubmitted extends AuthEvent {
     required this.newPassword
   });
 }
+
+class LogoutSubmitted extends AuthEvent {}

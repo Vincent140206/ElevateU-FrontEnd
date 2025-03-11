@@ -88,7 +88,7 @@ class AuthServices {
         ApiConstant.logout,
       );
 
-      if (response.statusCode == 204) {
+      if (response.statusCode == 201) {
         debugPrint("Sukses Logout");
       }
     } catch (e) {

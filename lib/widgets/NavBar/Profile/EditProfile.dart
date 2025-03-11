@@ -1,5 +1,12 @@
+import 'dart:io';
+import 'package:elevateu_bcc_new/widgets/ElevatedButton.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../../core/services/local_storage_service.dart';
+import '../../../features/user/bloc/user_bloc.dart';
+import '../../../features/user/bloc/user_event.dart';
 import '../../TextField.dart';
 
 class EditProfile extends StatefulWidget {
@@ -15,9 +22,49 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController roleController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
-  final TextEditingController alamatController = TextEditingController();
   final TextEditingController universitasController = TextEditingController();
   final TextEditingController jurusanController = TextEditingController();
+
+  LocalStorageService localStorageService = LocalStorageService();
+  String role = '';
+  File? image;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    try {
+      Map<String, String?> userData = await localStorageService.getUserData();
+      setState(() {
+        nameController.text = userData['name'] ?? '';
+        emailController.text = userData['email'] ?? '';
+        role = userData['role'] ?? '';
+        passwordController.text = userData['password'] ?? '';
+        numberController.text = userData['number'] ?? '';
+        universitasController.text = userData['student_instance'] ?? '';
+        jurusanController.text = userData['student_major'] ?? '';
+      });
+    } catch (e) {
+      print('Error loading user data: $e');
+    }
+  }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    } else {
+      debugPrint('No image selected.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,16 +81,15 @@ class _EditProfileState extends State<EditProfile> {
             height: 1.40,
           ),
         ),
-        leading:
-        IconButton(
-            onPressed: (){
-              Navigator.of(context).pop();
-            },
-            icon: Image.asset(
-              'assets/icons/Chevron_Left.png',
-              width: 24,
-              height: 24,
-            )
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Image.asset(
+            'assets/icons/Chevron_Left.png',
+            width: 24,
+            height: 24,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -52,15 +98,54 @@ class _EditProfileState extends State<EditProfile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 14,),
-              Center(
-                child: Image.asset(
-                    'assets/images/Rafael.png',
-                  width: 87,
-                  height: 87,
-                ),
+              Stack(
+                children: [
+                  Container(
+                    height: 100,
+                    child: Center(
+                      child: image == null
+                          ? Image.asset(
+                        'assets/images/Rafael.png',
+                        width: 87,
+                        height: 87,
+                      )
+                          : ClipOval(
+                        child: Image.file(
+                          image!,
+                          width: 87,
+                          height: 87,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 70,
+                    left: 170,
+                    child: Container(
+                      width: 25,
+                      height: 25,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey[300],
+                      ),
+                      child: Center(
+                        child: IconButton(
+                          onPressed: () {
+                            pickImage();
+                          },
+                          icon: Image.asset(
+                            'assets/images/Kamera.png',
+                            width: 30,
+                            height: 28,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              SizedBox(height: 40,),
               Text('Nama'),
               SizedBox(height: 12,),
               TextFields(
@@ -83,12 +168,16 @@ class _EditProfileState extends State<EditProfile> {
               SizedBox(height: 16,),
               Text('Role'),
               SizedBox(height: 12,),
-              TextFields(
-                  controller: roleController,
-                  hintText: 'Student',
-                  obscureText: false,
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
                   color: Color(0XFFF1F3FF),
-                  borderColor: Colors.transparent
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  child: Text(role),
+                ),
               ),
               SizedBox(height: 16,),
               Text('Kata Sandi'),
@@ -97,26 +186,6 @@ class _EditProfileState extends State<EditProfile> {
                   controller: passwordController,
                   hintText: '*******',
                   obscureText: true,
-                  color: Color(0XFFF1F3FF),
-                  borderColor: Colors.transparent
-              ),
-              SizedBox(height: 16,),
-              Text('No Hp'),
-              SizedBox(height: 12,),
-              TextFields(
-                  controller: numberController,
-                  hintText: '0812-5678-9010',
-                  obscureText: false,
-                  color: Color(0XFFF1F3FF),
-                  borderColor: Colors.transparent
-              ),
-              SizedBox(height: 16,),
-              Text('Alamat'),
-              SizedBox(height: 12,),
-              TextFields(
-                  controller: alamatController,
-                  hintText: 'Malang',
-                  obscureText: false,
                   color: Color(0XFFF1F3FF),
                   borderColor: Colors.transparent
               ),
@@ -140,7 +209,32 @@ class _EditProfileState extends State<EditProfile> {
                   color: Color(0XFFF1F3FF),
                   borderColor: Colors.transparent
               ),
-              SizedBox(height: 80,)
+              SizedBox(height: 50,),
+              Elevatedbutton1(
+                  tulisan: 'Simpan Profile',
+                  onPressed: () {
+                    String name = nameController.text;
+                    String email = emailController.text;
+                    String role = roleController.text;
+                    String universitas = universitasController.text;
+                    String jurusan = jurusanController.text;
+
+                    context.read<UserBloc>().add(PatchUserRequested(
+                      name: name,
+                      email: email,
+                      role: role,
+                      universitas: universitas,
+                      jurusan: jurusan,
+                    ));
+
+                    if (image != null) {
+                    context.read<UserBloc>().add(UpdateAvatarRequested(image!));
+                    }
+                  },
+                  width: double.infinity,
+                  height: 48
+              ),
+              SizedBox(height: 30,)
             ],
           ),
         ),

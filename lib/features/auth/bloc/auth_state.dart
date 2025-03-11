@@ -1,13 +1,13 @@
 abstract class AuthState {}
 
-class LogoutInitiate extends AuthState{}
+class AuthInitiate extends AuthState{}
 
-class LogoutLoading extends AuthState{}
+class AuthLoading extends AuthState{}
 
-class LogoutSuccess extends AuthState{}
+class AuthSuccess extends AuthState{}
 
-class LogoutFailure extends AuthState{
+class AuthFailure extends AuthState{
   final String error;
 
-  LogoutFailure(this.error);
+  AuthFailure(this.error);
 }

@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../bloc/OtpBloc.dart';
 import '../bloc/RegisterBloc.dart';
 import '../bloc/RegisterEvent.dart';
+import 'LoginScreen.dart';
 
 class VerifikasiOtp extends StatefulWidget {
   const VerifikasiOtp({super.key});
@@ -193,12 +194,19 @@ class _VerifikasiOtpState extends State<VerifikasiOtp> {
                             const SnackBar(content: Text('Loading...')),
                           );
                         } else if (state is OtpSuccess) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('OTP validated successfully!')),
-                          );
+                          PopUp.show(
+                            context,
+                            imagePath: 'assets/images/AkunCreated.png',
+                            deskripsi: 'Akun Berhasil Dibuat',
+                          ).then((_) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => LoginScreen()),
+                            );
+                          });
                         } else if (state is OtpFailure) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Error: ${state.error}')),
+                            SnackBar(content: Text('Ada Error, coba lagi')),
                           );
                         }
                       },
