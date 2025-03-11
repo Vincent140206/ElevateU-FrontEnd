@@ -43,28 +43,19 @@ class LocalStorageService {
   Future<void> saveStudentData(String university, String jurusan) async {
     final prefs = await SharedPreferences.getInstance();
 
-    String defaultUniversity = " ";
-    String defaultJurusan = " ";
-
-    await prefs.setString('university', university.isNotEmpty? university : defaultUniversity);
-    await prefs.setString('jurusan', jurusan.isNotEmpty? university : defaultJurusan);
+    await prefs.setString('university', university.isNotEmpty ? university : ' ');
+    await prefs.setString('jurusan', jurusan.isNotEmpty ? jurusan : ' ');
   }
 
   //simpen data mentor
   Future<void> saveMentorData(String phone, String address, String keahlian, String posisi, String perusahaan) async {
     final prefs = await SharedPreferences.getInstance();
 
-    String defaultPhone = " ";
-    String defaultAddress = " ";
-    String defaultKeahlian = " ";
-    String defaultPosisi = " ";
-    String defaultPerusahaan = " ";
-
-    await prefs.setString('phone', phone.isNotEmpty? phone : defaultPhone);
-    await prefs.setString('address', address.isNotEmpty? address : defaultAddress);
-    await prefs.setString('keahlian', keahlian.isNotEmpty? keahlian : defaultKeahlian);
-    await prefs.setString('posisi', posisi.isNotEmpty? posisi : defaultPosisi);
-    await prefs.setString('perusahaan', perusahaan.isNotEmpty? perusahaan : defaultPerusahaan);
+    await prefs.setString('phone', phone.isNotEmpty ? phone : ' ');
+    await prefs.setString('address', address.isNotEmpty ? address : ' ');
+    await prefs.setString('keahlian', keahlian.isNotEmpty ? keahlian : ' ');
+    await prefs.setString('posisi', posisi.isNotEmpty ? posisi : ' ');
+    await prefs.setString('perusahaan', perusahaan.isNotEmpty ? perusahaan : ' ');
   }
 
   //simpen data user (setelah login)
@@ -126,5 +117,10 @@ class LocalStorageService {
   Future<String> getBearerToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('bearerToken') ?? '';
+  }
+
+  Future<void> saveBearerToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('bearerToken', token);
   }
 }

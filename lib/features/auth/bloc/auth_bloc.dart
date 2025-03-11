@@ -15,19 +15,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         String token = await localStorageService.getBearerToken();
+        debugPrint('Bearer Token: $token');
         dio.options.headers['Authorization'] = 'Bearer $token';
 
         final response = await dio.post(
           ApiConstant.logout,
+            options: Options(
+            headers: {
+              'Authorization': "Bearer $token",
+            }
+        )
         );
 
-        if(response.statusCode == 201) {
+        if (response.statusCode == 204) {
+          await localStorageService.clearToken();
           emit(AuthSuccess());
-          debugPrint("Berhasil");
+          debugPrint("Logout berhasil");
+        } else {
+          emit(AuthFailure('Logout gagal: ${response.data}'));
         }
       } catch (e) {
-        emit(AuthFailure('error'));
-        throw Exception("Error: $e");
+        emit(AuthFailure('Terjadi kesalahan saat logout'));
+
+        if (e is DioException) {
+          if (e.response != null) {
+            debugPrint('Dio error response data: ${e.response?.data}');
+            emit(AuthFailure('Dio error: ${e.response?.data}'));
+          } else {
+            emit(AuthFailure('Dio error: ${e.toString()}'));
+          }
+        } else {
+          emit(AuthFailure('Error: ${e.toString()}'));
+        }
       }
     });
   }

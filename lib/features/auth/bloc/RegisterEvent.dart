@@ -30,9 +30,33 @@ class RegisterFailure extends RegisterState {
 abstract class OtpEvent {}
 
 class OTPSubmitted extends OtpEvent {
-  final String otp;
+  final String? email;
+  final String? otp;
+  final String? name;
+  final String? password;
+  final String? role;
+  final String? address;
+  final String? university;
+  final String? jurusan;
+  final String? phone;
+  final String? keahlian;
+  final String? posisi;
+  final String? perusahaan;
 
-  OTPSubmitted(this.otp);
+  OTPSubmitted({
+    this.email,
+    this.otp,
+    this.name,
+    this.password,
+    this.role,
+    this.address,
+    this.university,
+    this.jurusan,
+    this.phone,
+    this.keahlian,
+    this.posisi,
+    this.perusahaan,
+  });
 }
 
 abstract class OtpState {}

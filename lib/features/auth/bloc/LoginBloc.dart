@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/constant/api_constant.dart';
 import '../../../core/services/local_storage_service.dart';
 import 'LoginEvent.dart';
@@ -22,6 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
 
         if (response.statusCode == 200) {
+          final localStorageService = LocalStorageService();
           debugPrint('Login Sukses');
 
           final data = response.data;
@@ -29,7 +29,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           final refreshToken = data['refresh_token'];
           final user = data['user'];
 
-          final localStorageService = LocalStorageService();
+          await localStorageService.saveBearerToken(accessToken);
+
           await localStorageService.saveToken(accessToken, refreshToken);
           await localStorageService.saveUserDataLoggedIn(
               user['id'],

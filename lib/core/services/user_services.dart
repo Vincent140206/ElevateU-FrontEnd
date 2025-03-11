@@ -40,11 +40,12 @@ class UserServices {
   }
 
   Future<void> patchUser ({
-    required String name,
-    required String email,
-    required String role,
-    required String universitas,
-    required String jurusan,
+    String name = 'Default Name',
+    String email = 'default@example.com',
+    String universitas = 'Default University',
+    String jurusan = 'Default Major',
+    String specialization = 'Default specialization',
+    String experience = 'Default experience',
   }) async {
     try {
       final response = await dio.patch(
@@ -52,17 +53,26 @@ class UserServices {
         data: {
           "name": name,
           "email": email,
-          "role": role,
-          "universitas": universitas,
-          "jurusan": jurusan,
+          "student": {
+            "instance": universitas,
+            "major": jurusan,
+          },
+          "mentor": {
+            "specialization": specialization,
+            "experience": experience,
+            "price": 0,
+          },
         },
       );
       if (response.statusCode == 204) {
         debugPrint("Patch User Sukses");
+      } else {
+        debugPrint("Gagal memperbarui data pengguna: ${response.statusCode}");
+        throw Exception("Gagal memperbarui data pengguna: ${response.statusCode}");
       }
     } catch (e) {
-      debugPrint('error: $e');
-      throw Exception('Gagal memperbarui data pengguna: $e');
+      debugPrint("Error patching user: $e");
+      throw Exception("Gagal memperbarui data pengguna: $e");
     }
   }
 

@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../features/auth/bloc/auth_bloc.dart';
 import '../../../features/auth/bloc/auth_state.dart';
 import '../../PopUp.dart';
+import '../homeScreen/HomeScreen.dart';
 import 'EditProfile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -259,17 +260,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 34,),
                   BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
-                      if (state is UserSuccess) {
+                      if (state is AuthSuccess) {
                         PopUp.show(
-                            context,
-                            imagePath: 'assets/images/AkunCreated.png',
-                            deskripsi: 'Berhasil Logout'
+                          context,
+                          imagePath: 'assets/images/AkunCreated.png',
+                          deskripsi: 'Berhasil Logout',
                         ).then((_) {
                           Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (context) => LoginScreen())
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginScreen()),
                           );
                         });
-                      } else if (state is UserFailure) {
+                      } else if (state is AuthFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Gagal Logout')),
                         );
@@ -278,7 +280,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     builder: (context, state) {
                       return GestureDetector(
                         onTap: () {
-                          BlocProvider.of<AuthBloc>(context).add(LogoutSubmitted());
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Konfirmasi Logout'),
+                                content: const Text('Apakah Anda yakin ingin logout?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Batal'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      BlocProvider.of<AuthBloc>(context).add(LogoutSubmitted());
+                                    },
+                                    child: const Text('Logout'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -303,7 +328,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             const SizedBox(width: 20),
                             Text('Keluar'),
                             Spacer(),
-                            Icon(Icons.navigate_next_sharp,size: 30,)
+                            Icon(Icons.navigate_next_sharp, size: 30),
                           ],
                         ),
                       );
@@ -314,12 +339,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     listener: (context, state) {
                       if (state is UserSuccess) {
                         PopUp.show(
-                            context,
-                            imagePath: 'assets/images/AkunCreated.png',
-                            deskripsi: 'Akun berhasil dihapus'
+                          context,
+                          imagePath: 'assets/images/AkunCreated.png',
+                          deskripsi: 'Akun berhasil dihapus',
                         ).then((_) {
                           Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (context) => LoginScreen())
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginScreen()),
                           );
                         });
                       } else if (state is UserFailure) {
@@ -331,7 +357,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     builder: (context, state) {
                       return GestureDetector(
                         onTap: () {
-                          BlocProvider.of<UserBloc>(context).add(DeleteUserRequested());
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Konfirmasi Hapus Akun'),
+                                content: const Text('Apakah Anda yakin ingin menghapus akun ini?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Batal'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      BlocProvider.of<UserBloc>(context).add(DeleteUserRequested());
+                                    },
+                                    child: const Text('Hapus'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -356,7 +405,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             const SizedBox(width: 20),
                             Text('Delete Account'),
                             Spacer(),
-                            Icon(Icons.navigate_next_sharp,size: 30,)
+                            Icon(Icons.navigate_next_sharp, size: 30),
                           ],
                         ),
                       );

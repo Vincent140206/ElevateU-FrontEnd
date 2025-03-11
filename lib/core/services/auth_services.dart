@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:elevateu_bcc_new/core/constant/api_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/auth/view/LoginScreen.dart';
 import '../../widgets/PopUp.dart';
 import 'local_storage_service.dart';

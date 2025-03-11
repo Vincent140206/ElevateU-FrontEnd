@@ -216,7 +216,13 @@ class _VerifikasiOtpState extends State<VerifikasiOtp> {
                           if (otp.length == 6) {
                             final prefs = await SharedPreferences.getInstance();
                             await prefs.setString('otp', otp);
-                            context.read<OTPBloc>().add(OTPSubmitted(otp));
+                            context.read<OTPBloc>().add(OTPSubmitted());
+                            await PopUp.show(
+                                context,
+                                imagePath: 'assets/images/AkunCreated.png',
+                                deskripsi: 'Akun Berhasil Dibuat!'
+                            );
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Harap masukkan semua digit OTP')),
