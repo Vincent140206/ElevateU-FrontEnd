@@ -164,6 +164,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                             children: [
                               SizedBox(height: 4),
                               TextFields(
+                                enabled: true,
                                 controller: Submission,
                                 hintText: 'bit/ly.tugaschallenge',
                                 obscureText: false,

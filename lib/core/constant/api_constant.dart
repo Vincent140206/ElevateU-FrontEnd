@@ -15,4 +15,8 @@ class ApiConstant {
   static const String deleteUser = "$baseUrl/users/me";
   static const String patchUser = "$baseUrl/users/me";
   static const String updateAvatar = "$baseUrl/users/me/avatar";
+  static const String deleteAvatar = "$baseUrl/users/me/avatar";
+
+  // CATEGORY
+  static const String newCategory = "$baseUrl/categories";
 }

@@ -32,7 +32,7 @@ void main() async {
           create: (context) => LoginBloc(Dio()),
         ),
         BlocProvider<UserBloc>(
-          create: (context) => UserBloc(Dio(), userServices, api),
+          create: (context) => UserBloc(Dio(), userServices),
         ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(Dio(), localStorageService),

@@ -48,7 +48,7 @@ class LocalStorageService {
   }
 
   //simpen data mentor
-  Future<void> saveMentorData(String phone, String address, String keahlian, String posisi, String perusahaan) async {
+  Future<void> saveMentorData(String phone, String address, String keahlian, String posisi, String perusahaan, String gender) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString('phone', phone.isNotEmpty ? phone : ' ');
@@ -56,6 +56,7 @@ class LocalStorageService {
     await prefs.setString('keahlian', keahlian.isNotEmpty ? keahlian : ' ');
     await prefs.setString('posisi', posisi.isNotEmpty ? posisi : ' ');
     await prefs.setString('perusahaan', perusahaan.isNotEmpty ? perusahaan : ' ');
+    await prefs.setString('gender', gender.isNotEmpty ? gender : 'male');
   }
 
   //simpen data user (setelah login)
@@ -81,6 +82,7 @@ class LocalStorageService {
 
   Future<Map<String, String?>> getUserData() async {
     final prefs = await SharedPreferences.getInstance();
+    String? id = prefs.getString('id');
     String? name = prefs.getString('name');
     String? email = prefs.getString('email');
     String? role = prefs.getString('role');
@@ -88,6 +90,7 @@ class LocalStorageService {
     String? instance = prefs.getString('student_instance');
     String? major = prefs.getString('student_major');
     return {
+      'id': id,
       'name': name,
       'email': email,
       'role': role,
@@ -122,5 +125,15 @@ class LocalStorageService {
   Future<void> saveBearerToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('bearerToken', token);
+  }
+
+  Future<void> saveUserProfileImageUrl(String imageUrl) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userProfileImageUrl', imageUrl);
+  }
+
+  Future<String?> getUserProfileImageUrl() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userProfileImageUrl');
   }
 }

@@ -117,6 +117,7 @@ class _SignupscreenState extends State<Signupscreen> {
                     const SizedBox(height: 34),
                     const Text('Nama'),
                     TextFields(
+                      enabled: true,
                       controller: nameController,
                       hintText: 'Jacob Hensen',
                       obscureText: false,
@@ -127,6 +128,7 @@ class _SignupscreenState extends State<Signupscreen> {
                     const Text('Email', style: TextStyle(fontSize: 14)),
                     const SizedBox(height: 11),
                     TextFields(
+                      enabled: true,
                       controller: emailController,
                       hintText: 'Email',
                       obscureText: false,

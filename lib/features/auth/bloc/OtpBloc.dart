@@ -19,14 +19,14 @@ class OTPBloc extends Bloc<OtpEvent, OtpState> {
         String name = prefs.getString('name') ?? ' ';
         String password = prefs.getString('password') ?? ' ';
         String role = prefs.getString('role') ?? 'user';
-        String address = prefs.getString('addres') ?? ' ';
+        String address = prefs.getString('address') ?? ' ';
         String university = prefs.getString('university') ?? ' ';
         String jurusan = prefs.getString('jurusan') ?? ' ';
         String phone = prefs.getString('phone') ?? ' ';
         String keahlian = prefs.getString('keahlian') ?? ' ';
         String posisi = prefs.getString('posisi') ?? ' ';
         String perusahaan = prefs.getString('perusahaan') ?? ' ';
-        int price = 0;
+        String gender = prefs.getString('gender') ?? 'male';
 
         email = event.email ?? email;
         name = event.name ?? name;
@@ -39,6 +39,8 @@ class OTPBloc extends Bloc<OtpEvent, OtpState> {
         keahlian = event.keahlian ?? keahlian;
         posisi = event.posisi ?? posisi;
         perusahaan = event.perusahaan ?? perusahaan;
+        address = event.address ?? address;
+        gender = event.gender ?? gender;
 
         debugPrint(email);
         debugPrint(otp);
@@ -47,15 +49,14 @@ class OTPBloc extends Bloc<OtpEvent, OtpState> {
         debugPrint(role);
         debugPrint(university);
         debugPrint(jurusan);
+        debugPrint(address);
         debugPrint(keahlian);
         debugPrint(posisi);
+        debugPrint(perusahaan);
+        debugPrint(gender);
 
         if (role != 'student' && role != 'mentor') {
           role = 'student';
-        }
-
-        if (price <= 0) {
-          price = 100;
         }
 
         final response = await dio.post(
@@ -71,9 +72,11 @@ class OTPBloc extends Bloc<OtpEvent, OtpState> {
                 "major": jurusan,
               },
               "mentor": {
+                "address": address,
                 "specialization": keahlian,
-                "experience": posisi,
-                "price": price
+                "current_job": posisi,
+                "company": perusahaan,
+                "gender": gender
               }
             }
         );

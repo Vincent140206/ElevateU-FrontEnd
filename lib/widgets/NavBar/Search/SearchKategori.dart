@@ -22,6 +22,7 @@ class _SearchKategoriState extends State<SearchKategori> {
         child: Column(
           children: [
             TextFields(
+              enabled: true,
               controller: searchController,
               hintText: 'Cari Skillmu disini',
               obscureText: false,

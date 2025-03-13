@@ -211,6 +211,7 @@ class _SkillChallengeDetailState extends State<SkillChallengeDetail> {
                               ),
                               SizedBox(height: 4,),
                               TextFields(
+                                  enabled: true,
                                   controller: Submission,
                                   hintText: 'bit/ly.tugaschallenge',
                                   obscureText: false,

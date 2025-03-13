@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       size: 24,
                     ),
                   ),
-                  const SizedBox(width: 125),
+                  const SizedBox(width: 110),
                   const Text(
                     'Sign in',
                     style: TextStyle(
@@ -131,6 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 356,
                           height: 48,
                           child: TextFields(
+                            enabled: true,
                             controller: usernameController,
                             hintText: 'Email',
                             fillColor: const Color(0XFFEEEEEE),

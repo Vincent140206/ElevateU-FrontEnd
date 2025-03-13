@@ -103,6 +103,7 @@ class RecoveryEmailState extends State<RecoveryEmail> {
                   ),
                   const SizedBox(height: 10),
                   TextFields(
+                    enabled: true,
                     controller: emailController,
                     hintText: 'Email',
                     obscureText: false,

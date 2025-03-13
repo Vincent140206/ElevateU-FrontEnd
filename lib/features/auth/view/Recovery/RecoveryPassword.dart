@@ -117,6 +117,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                   ),
                   const SizedBox(height: 11),
                   TextFields(
+                    enabled: true,
                     controller: emailController,
                     hintText: 'Masukan email di sini',
                     obscureText: false,

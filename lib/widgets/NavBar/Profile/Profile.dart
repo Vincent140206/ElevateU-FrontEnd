@@ -6,11 +6,9 @@ import 'package:elevateu_bcc_new/features/user/bloc/user_event.dart';
 import 'package:elevateu_bcc_new/features/user/bloc/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../features/auth/bloc/auth_bloc.dart';
 import '../../../features/auth/bloc/auth_state.dart';
 import '../../PopUp.dart';
-import '../homeScreen/HomeScreen.dart';
 import 'EditProfile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -32,7 +30,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
-              SizedBox(height: 44,),
+              SizedBox(
+                height: 44,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 17),
                 child: Center(
@@ -50,7 +50,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return Text('Error: ${snapshot.error}');
                       } else {
                         final userData = snapshot.data;
-                        String avatarUrl = userData?['avatarUrl'] ?? 'assets/images/Rafael.png';
+                        String avatarUrl = userData?['avatarUrl'] ??
+                            'assets/images/Rafael.png';
                         return Row(
                           children: [
                             Container(
@@ -64,8 +65,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   avatarUrl,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset('assets/images/Rafael.png');
-                                    },
+                                    return Image.asset(
+                                        'assets/images/Rafael.png');
+                                  },
                                 ),
                               ),
                             ),
@@ -80,17 +82,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         );
                       }
-                      },
+                    },
                   ),
                 ],
               ),
-              SizedBox(height: 63,),
+              SizedBox(
+                height: 63,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditProfile()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -115,11 +122,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(width: 20),
                         Text('Data Diri'),
                         Spacer(),
-                        Icon(Icons.navigate_next_sharp,size: 30,)
+                        Icon(
+                          Icons.navigate_next_sharp,
+                          size: 30,
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(height: 34,),
+                  SizedBox(
+                    height: 34,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,10 +155,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(width: 20),
                       Text('Pengaturan'),
                       Spacer(),
-                      Icon(Icons.navigate_next_sharp,size: 30,)
+                      Icon(
+                        Icons.navigate_next_sharp,
+                        size: 30,
+                      )
                     ],
                   ),
-                  SizedBox(height: 34,),
+                  SizedBox(
+                    height: 34,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,10 +187,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(width: 20),
                       Text('Bahasa'),
                       Spacer(),
-                      Icon(Icons.navigate_next_sharp,size: 30,)
+                      Icon(
+                        Icons.navigate_next_sharp,
+                        size: 30,
+                      )
                     ],
                   ),
-                  SizedBox(height: 34,),
+                  SizedBox(
+                    height: 34,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,22 +210,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         child: Center(
-                          child: Image.asset(
-                            'assets/icons/LifeBuoy.png',
-                            width: 15,
-                            height: 15,
-                          )
-                        ),
+                            child: Image.asset(
+                          'assets/icons/LifeBuoy.png',
+                          width: 15,
+                          height: 15,
+                        )),
                       ),
                       const SizedBox(width: 20),
                       Text('Bantuan'),
                       Spacer(),
-                      Icon(Icons.navigate_next_sharp,size: 30,)
+                      Icon(
+                        Icons.navigate_next_sharp,
+                        size: 30,
+                      )
                     ],
                   ),
-                  SizedBox(height: 27,),
+                  SizedBox(
+                    height: 27,
+                  ),
                   Divider(),
-                  SizedBox(height: 27,),
+                  SizedBox(
+                    height: 27,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -227,10 +255,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(width: 20),
                       Text('FAQs'),
                       Spacer(),
-                      Icon(Icons.navigate_next_sharp,size: 30,)
+                      Icon(
+                        Icons.navigate_next_sharp,
+                        size: 30,
+                      )
                     ],
                   ),
-                  SizedBox(height: 34,),
+                  SizedBox(
+                    height: 34,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -254,10 +287,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(width: 20),
                       Text('About App'),
                       Spacer(),
-                      Icon(Icons.navigate_next_sharp,size: 30,)
+                      Icon(
+                        Icons.navigate_next_sharp,
+                        size: 30,
+                      )
                     ],
                   ),
-                  SizedBox(height: 34,),
+                  SizedBox(
+                    height: 34,
+                  ),
                   BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
                       if (state is AuthSuccess) {
@@ -268,7 +306,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ).then((_) {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
                           );
                         });
                       } else if (state is AuthFailure) {
@@ -285,7 +324,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: const Text('Konfirmasi Logout'),
-                                content: const Text('Apakah Anda yakin ingin logout?'),
+                                content: const Text(
+                                    'Apakah Anda yakin ingin logout?'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
@@ -296,7 +336,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
-                                      BlocProvider.of<AuthBloc>(context).add(LogoutSubmitted());
+                                      BlocProvider.of<AuthBloc>(context)
+                                          .add(LogoutSubmitted());
                                     },
                                     child: const Text('Logout'),
                                   ),
@@ -334,82 +375,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                   ),
-                  SizedBox(height: 34,),
-                  BlocConsumer<UserBloc, UserState>(
-                    listener: (context, state) {
-                      if (state is UserSuccess) {
-                        PopUp.show(
-                          context,
-                          imagePath: 'assets/images/AkunCreated.png',
-                          deskripsi: 'Akun berhasil dihapus',
-                        ).then((_) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()),
-                          );
-                        });
-                      } else if (state is UserFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Aksi gagal, coba lagi')),
+                  SizedBox(
+                    height: 34,
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Konfirmasi Hapus Akun'),
+                              content: const Text(
+                                  'Apakah Anda yakin ingin menghapus akun ini?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Batal'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    BlocProvider.of<UserBloc>(context).add(DeleteUserRequested());
+                                  },
+                                  child: const Text('Hapus'),
+                                ),
+                              ],
+                            );
+                          },
                         );
-                      }
-                    },
-                    builder: (context, state) {
-                      return GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Konfirmasi Hapus Akun'),
-                                content: const Text('Apakah Anda yakin ingin menghapus akun ini?'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Batal'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      BlocProvider.of<UserBloc>(context).add(DeleteUserRequested());
-                                    },
-                                    child: const Text('Hapus'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: ShapeDecoration(
-                                color: Color(0x4C87B4EC),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.delete_forever,
-                                  size: 19,
-                                ),
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 30,
+                            height: 30,
+                            decoration: ShapeDecoration(
+                              color: Color(0x4C87B4EC),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            const SizedBox(width: 20),
-                            Text('Delete Account'),
-                            Spacer(),
-                            Icon(Icons.navigate_next_sharp, size: 30),
-                          ],
-                        ),
-                      );
-                    },
+                            child: Center(
+                              child: Icon(
+                                Icons.delete_forever,
+                                size: 19,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Text('Delete Account'),
+                          Spacer(),
+                          Icon(Icons.navigate_next_sharp, size: 30),
+                        ],
+                      )
                   ),
                   SizedBox(height: 34,),
                 ],

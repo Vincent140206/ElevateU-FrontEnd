@@ -29,6 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
               obscureText: false,
               color: Colors.transparent,
               borderColor: Color(0xFF4D86CD),
+              enabled: true,
             ),
           ),
           SizedBox(height: 21),

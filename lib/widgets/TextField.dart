@@ -16,6 +16,7 @@ class TextFields extends StatelessWidget {
     required this.color,
     required this.borderColor,
     this.fillColor,
+    required bool enabled,
   });
 
   @override

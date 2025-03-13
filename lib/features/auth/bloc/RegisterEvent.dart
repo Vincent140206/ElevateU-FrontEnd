@@ -42,6 +42,7 @@ class OTPSubmitted extends OtpEvent {
   final String? keahlian;
   final String? posisi;
   final String? perusahaan;
+  final String? gender;
 
   OTPSubmitted({
     this.email,
@@ -56,6 +57,7 @@ class OTPSubmitted extends OtpEvent {
     this.keahlian,
     this.posisi,
     this.perusahaan,
+    this.gender,
   });
 }
 

@@ -119,6 +119,7 @@ class SignupFormState extends State<SignupFormStudent> {
                     const Text('Universitas'),
                     const SizedBox(height: 12),
                     TextFields(
+                      enabled: true,
                       controller: universityController,
                       hintText: 'Cth: Universitas Ciputra',
                       obscureText: false,
@@ -129,6 +130,7 @@ class SignupFormState extends State<SignupFormStudent> {
                     const Text('Jurusan'),
                     const SizedBox(height: 12),
                     TextFields(
+                      enabled: true,
                       controller: jurusanController,
                       hintText: 'Cth: Product Manager',
                       obscureText: false,

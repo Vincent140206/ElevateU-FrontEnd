@@ -25,6 +25,7 @@ class _SignupFormMentorState extends State<SignupFormMentor> {
   final TextEditingController keahlianController = TextEditingController();
   final TextEditingController posisiController = TextEditingController();
   final TextEditingController perusahaanController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
 
   Future<void> saveMentorData() async {
     final localStorageService = LocalStorageService();
@@ -33,7 +34,8 @@ class _SignupFormMentorState extends State<SignupFormMentor> {
         addressController.text,
         keahlianController.text,
         posisiController.text,
-        perusahaanController.text
+        perusahaanController.text,
+        genderController.text
     );
   }
 
@@ -68,8 +70,22 @@ class _SignupFormMentorState extends State<SignupFormMentor> {
       );
       return;
     }
+    if (genderController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Gender tidak boleh kosong')),
+      );
+      return;
+    }
 
-    saveMentorData();
+    String gender = genderController.text.toLowerCase();
+    if (gender != 'male' && gender != 'female') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Gender harus "male" atau "female"')),
+      );
+      return;
+    }
+
+    await saveMentorData();
 
     String email = '';
     final prefs = await SharedPreferences.getInstance();
@@ -143,6 +159,7 @@ class _SignupFormMentorState extends State<SignupFormMentor> {
                     const Text('No Hp', style: TextStyle(fontSize: 14)),
                     const SizedBox(height: 11),
                     TextFields(
+                      enabled: true,
                       controller: numberController,
                       hintText: '0812-5678-9010',
                       obscureText: false,
@@ -153,6 +170,7 @@ class _SignupFormMentorState extends State<SignupFormMentor> {
                     const Text('Alamat'),
                     const SizedBox(height: 12),
                     TextFields(
+                      enabled: true,
                       controller: addressController,
                       hintText: 'Masukan alamat',
                       obscureText: false,
@@ -163,6 +181,7 @@ class _SignupFormMentorState extends State<SignupFormMentor> {
                     const Text('Bidang Keahlian'),
                     const SizedBox(height: 12),
                     TextFields(
+                      enabled: true,
                       controller: keahlianController,
                       hintText: 'Cth: Programmer',
                       obscureText: false,
@@ -173,6 +192,7 @@ class _SignupFormMentorState extends State<SignupFormMentor> {
                     const Text('Posisi Saat Ini'),
                     const SizedBox(height: 12),
                     TextFields(
+                      enabled: true,
                       controller: posisiController,
                       hintText: 'Cth: Product Manager',
                       obscureText: false,
@@ -183,8 +203,20 @@ class _SignupFormMentorState extends State<SignupFormMentor> {
                     const Text('Perusahaan atau Organisasi'),
                     const SizedBox(height: 12),
                     TextFields(
+                      enabled: true,
                       controller: perusahaanController,
                       hintText: 'Cth: Microsoft',
+                      obscureText: false,
+                      color: const Color(0XFFEEEEEE),
+                      borderColor: Colors.transparent,
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('Gender'),
+                    const SizedBox(height: 12),
+                    TextFields(
+                      enabled: true,
+                      controller: genderController,
+                      hintText: 'Male/Female',
                       obscureText: false,
                       color: const Color(0XFFEEEEEE),
                       borderColor: Colors.transparent,

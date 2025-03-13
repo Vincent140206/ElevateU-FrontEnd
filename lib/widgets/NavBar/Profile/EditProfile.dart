@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:elevateu_bcc_new/core/services/user_services.dart';
 import 'package:elevateu_bcc_new/widgets/ElevatedButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../core/services/local_storage_service.dart';
 import '../../../features/user/bloc/user_bloc.dart';
 import '../../../features/user/bloc/user_event.dart';
+import '../../../features/user/bloc/user_state.dart';
 import '../../TextField.dart';
 
 class EditProfile extends StatefulWidget {
@@ -27,7 +29,8 @@ class _EditProfileState extends State<EditProfile> {
 
   LocalStorageService localStorageService = LocalStorageService();
   String role = '';
-  File? image;
+  String? imageUrl; // URL for the profile image
+  UserServices userServices = UserServices();
 
   @override
   void initState() {
@@ -38,6 +41,8 @@ class _EditProfileState extends State<EditProfile> {
   Future<void> loadUserData() async {
     try {
       Map<String, String?> userData = await localStorageService.getUserData();
+      imageUrl = await localStorageService.getUserProfileImageUrl();
+
       setState(() {
         nameController.text = userData['name'] ?? '';
         emailController.text = userData['email'] ?? '';
@@ -52,17 +57,47 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  Future<void> pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        image = File(pickedFile.path);
-      });
-    } else {
-      debugPrint('No image selected.');
-    }
+  void _showAvatarOptionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Pilih Aksi'),
+          content: Text('Apa yang ingin Anda lakukan?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.read<UserBloc>().add(DeleteAvatarRequested());
+              },
+              child: Text('Hapus Avatar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                userServices.pickImageAndUpdateAvatar(
+                  context,
+                      (imageUrl) {
+                    context.read<UserBloc>().add(UserAvatarUpdated(imageUrl) as UserEvent);
+                    localStorageService.saveUserProfileImageUrl(imageUrl);
+                    setState(() {
+                      this.imageUrl = imageUrl;
+                    });
+                  },
+                      (error) {
+                    context.read<UserBloc>().add(UserFailure(error) as UserEvent);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(error)),
+                    );
+                  },
+                );
+              },
+              child: Text('Upload Avatar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -92,152 +127,188 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 36),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
+      body: BlocConsumer<UserBloc, UserState>(
+        listener: (context, state) {
+          if (state is UserSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Profile updated successfully!')),
+            );
+          } else if (state is UserAvatarUpdated) {
+            String newImageUrl = state.imageUrl;
+            localStorageService.saveUserProfileImageUrl(newImageUrl);
+            setState(() {
+              imageUrl = newImageUrl;
+            });
+          } else if (state is UserFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Aksi gagal, coba lagi')),
+            );
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 36),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 100,
-                    child: Center(
-                      child: image == null
-                          ? Image.asset(
-                        'assets/images/Rafael.png',
-                        width: 87,
-                        height: 87,
-                      )
-                          : ClipOval(
-                        child: Image.file(
-                          image!,
-                          width: 87,
-                          height: 87,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 70,
-                    left: 170,
-                    child: Container(
-                      width: 25,
-                      height: 25,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey[300],
-                      ),
-                      child: Center(
-                        child: IconButton(
-                          onPressed: () {
-                            pickImage();
-                          },
-                          icon: Image.asset(
-                            'assets/images/Kamera.png',
-                            width: 30,
-                            height: 28,
-                            color: Colors.black,
+                  Stack(
+                    children: [
+                      Container(
+                        height: 100,
+                        child: Center(
+                          child: imageUrl == null || imageUrl!.isEmpty
+                              ? Image.asset(
+                            'assets/images/Rafael.png', // Default image
+                            width: 87,
+                            height: 87,
+                          )
+                              : ClipOval(
+                            child: imageUrl!.startsWith('http')
+                                ? Image.network(
+                              imageUrl!,
+                              width: 87,
+                              height: 87,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/Rafael.png', // Fallback image on error
+                                  width: 87,
+                                  height: 87,
+                                );
+                              },
+                            )
+                                : Image.file(
+                              File(imageUrl!),
+                              width: 87,
+                              height: 87,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
+                      Positioned(
+                        top: 70,
+                        left: 170,
+                        child: Container(
+                          width : 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey[300],
+                          ),
+                          child: Center(
+                            child: IconButton(
+                              onPressed: () {
+                                _showAvatarOptionsDialog(context);
+                              },
+                              icon: Image.asset(
+                                'assets/images/Kamera.png',
+                                width: 30,
+                                height: 28,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text('Nama'),
+                  SizedBox(height: 12),
+                  TextFields(
+                    enabled: true,
+                    controller: nameController,
+                    hintText: 'Rafael Jacob Hansen',
+                    obscureText: false,
+                    color: Color(0XFFF1F3FF),
+                    borderColor: Colors.transparent,
+                  ),
+                  SizedBox(height: 16),
+                  Text('Email'),
+                  SizedBox(height: 12),
+                  TextFields(
+                    controller: emailController,
+                    hintText: 'user@example.com',
+                    obscureText: false,
+                    color: Color(0XFFF1F3FF),
+                    borderColor: Colors.transparent,
+                    enabled: false,
+                  ),
+                  SizedBox(height: 16),
+                  Text('Role'),
+                  SizedBox(height: 12),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Color(0XFFF1F3FF),
                     ),
-                  )
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      child: Text(role),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text('Kata Sandi'),
+                  SizedBox(height: 12),
+                  TextFields(
+                    enabled: true,
+                    controller: passwordController,
+                    hintText: '*******',
+                    obscureText: true,
+                    color: Color(0XFFF1F3FF),
+                    borderColor: Colors.transparent,
+                  ),
+                  SizedBox(height: 16),
+                  Text('Universitas'),
+                  SizedBox(height: 12),
+                  TextFields(
+                    enabled: true,
+                    controller: universitasController,
+                    hintText: 'Universitas Brawijaya',
+                    obscureText: false,
+                    color: Color(0XFFF1F3FF),
+                    borderColor: Colors.transparent,
+                  ),
+                  SizedBox(height: 16),
+                  Text('Jurusan'),
+                  SizedBox(height: 12),
+                  TextFields(
+                    enabled: true,
+                    controller: jurusanController,
+                    hintText: 'Sistem Informasi',
+                    obscureText: false,
+                    color: Color(0XFFF1F3FF),
+                    borderColor: Colors.transparent,
+                  ),
+                  SizedBox(height: 50),
+                  Elevatedbutton1(
+                    tulisan: 'Simpan Profile',
+                    onPressed: () {
+                      String name = nameController.text;
+                      String email = emailController.text;
+                      String universitas = universitasController.text;
+                      String jurusan = jurusanController.text;
+
+                      context.read<UserBloc>().add(PatchUserRequested(
+                        name: name,
+                        email: email,
+                        role: role,
+                        universitas: universitas,
+                        jurusan: jurusan,
+                        password: '',
+                      ));
+                    },
+                    width: double.infinity,
+                    height: 48,
+                  ),
+                  SizedBox(height: 30),
                 ],
               ),
-              Text('Nama'),
-              SizedBox(height: 12,),
-              TextFields(
-                  controller: nameController,
-                  hintText: 'Rafael Jacob Hansen',
-                  obscureText: false,
-                  color: Color(0XFFF1F3FF),
-                  borderColor: Colors.transparent
-              ),
-              SizedBox(height: 16,),
-              Text('Email'),
-              SizedBox(height: 12,),
-              TextFields(
-                  controller: emailController,
-                  hintText: 'user@example.com',
-                  obscureText: false,
-                  color: Color(0XFFF1F3FF),
-                  borderColor: Colors.transparent
-              ),
-              SizedBox(height: 16,),
-              Text('Role'),
-              SizedBox(height: 12,),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Color(0XFFF1F3FF),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  child: Text(role),
-                ),
-              ),
-              SizedBox(height: 16,),
-              Text('Kata Sandi'),
-              SizedBox(height: 12,),
-              TextFields(
-                  controller: passwordController,
-                  hintText: '*******',
-                  obscureText: true,
-                  color: Color(0XFFF1F3FF),
-                  borderColor: Colors.transparent
-              ),
-              SizedBox(height: 16,),
-              Text('Universitas'),
-              SizedBox(height: 12,),
-              TextFields(
-                  controller: universitasController,
-                  hintText: 'Universitas Brawijaya',
-                  obscureText: false,
-                  color: Color(0XFFF1F3FF),
-                  borderColor: Colors.transparent
-              ),
-              SizedBox(height: 16,),
-              Text('Jurusan'),
-              SizedBox(height: 12,),
-              TextFields(
-                  controller: jurusanController,
-                  hintText: 'Sistem Informasi',
-                  obscureText: false,
-                  color: Color(0XFFF1F3FF),
-                  borderColor: Colors.transparent
-              ),
-              SizedBox(height: 50,),
-              Elevatedbutton1(
-                  tulisan: 'Simpan Profile',
-                  onPressed: () {
-                    String name = nameController.text;
-                    String email = emailController.text;
-                    String role = roleController.text;
-                    String universitas = universitasController.text;
-                    String jurusan = jurusanController.text;
-
-                    context.read<UserBloc>().add(PatchUserRequested(
-                      name: name,
-                      email: email,
-                      role: role,
-                      universitas: universitas,
-                      jurusan: jurusan,
-                    ));
-
-                    if (image != null) {
-                    context.read<UserBloc>().add(UpdateAvatarRequested(image!));
-                    }
-                  },
-                  width: double.infinity,
-                  height: 48
-              ),
-              SizedBox(height: 30,)
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
