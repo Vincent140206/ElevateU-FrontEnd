@@ -1,3 +1,5 @@
+import 'package:elevateu_bcc_new/Leaderboard.dart';
+import 'package:elevateu_bcc_new/widgets/NavBar/Mentor/MentorScreen.dart';
 import 'package:elevateu_bcc_new/widgets/NavBar/Search/Search.dart';
 import 'package:flutter/material.dart';
 import '../../../core/services/local_storage_service.dart';
@@ -115,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget Function(String)> get _screens => [
         (name) => HomeContent(name: name),
-        (name) => const SearchScreen(),
+        (name) => SearchScreen(),
         (name) => const MentorChat(),
         (name) => const CourseScreen(),
         (name) => const ProfileScreen(),
@@ -144,17 +146,39 @@ class HomeContent extends StatelessWidget {
                       child: Row(
                         children: [
                           Flexible(
-                            child: Text(
-                              "Let’s Elevate Your \nSkill $name",
-                              style: TextStyle(
-                                color: Color(0xFF141414),
-                                fontSize: 30,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
-                                height: 1.27,
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Let’s Elevate Your \nSkill ",
+                                    style: TextStyle(
+                                      color: Color(0XFF141414),
+                                      fontSize: 30,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.27,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: name,
+                                    style: TextStyle(
+                                      color: Color(0XFF30C8FF),
+                                      fontSize: 30,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.27,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
+                          SizedBox(width: 8),
+                          Image.asset(
+                            'assets/images/APIH.png',
+                            width: 25,
+                            height: 25,
+                          )
                         ],
                       ),
                     ),
@@ -172,8 +196,8 @@ class HomeContent extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  padding: const EdgeInsets.only(top: 14, left: 12),
-                  height: 100,
+                  padding: const EdgeInsets.only(left: 12),
+                  height: 90,
                   width: 380,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
@@ -186,11 +210,11 @@ class HomeContent extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Column(
+                  child: Column(
                     children: [
                       Row(
                         children: [
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -216,6 +240,21 @@ class HomeContent extends StatelessWidget {
                               ),
                             ],
                           ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Image.asset(
+                                'assets/images/ProgressBar.png',
+                                width: 80,
+                                height: 80,
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ],
@@ -223,75 +262,80 @@ class HomeContent extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.only(top: 8, left: 12, bottom: 11),
-                width: 380,
-                height: 58,
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => LeaderboardScreen()));
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(top: 8, left: 12, bottom: 11),
+                  width: 380,
+                  height: 50,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    shadows: const [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      ),
+                    ],
                   ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: const ShapeDecoration(
-                        color: Color(0xFFEEEEEE),
-                        shape: OvalBorder(),
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/Coin.png',
-                          width: 20,
-                          height: 20,
-                          fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 30,
+                        height: 30,
+                        decoration: const ShapeDecoration(
+                          color: Color(0xFFEEEEEE),
+                          shape: OvalBorder(),
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('50 Coins'),
-                        Text(
-                          '4 Voucher tersedia',
-                          style: TextStyle(
-                            color: Color(0xFF7C7C7C),
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                            height: 1.50,
+                        child: Center(
+                          child: Image.asset(
+                            'assets/images/Coin.png',
+                            width: 20,
+                            height: 20,
+                            fit: BoxFit.scaleDown,
                           ),
                         ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: const ShapeDecoration(
-                        color: Color(0xFF00678D),
-                        shape: OvalBorder(),
                       ),
-                      child: Image.asset(
-                        'assets/images/Titik3.png',
-                        scale: 4,
+                      const SizedBox(width: 12),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('50 Coins'),
+                          Text(
+                            '4 Voucher tersedia',
+                            style: TextStyle(
+                              color: Color(0xFF7C7C7C),
+                              fontSize: 12,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              height: 1.50,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(width: 13)
-                  ],
+                      const Spacer(),
+                      Container(
+                        width: 30,
+                        height: 30,
+                        decoration: const ShapeDecoration(
+                          color: Color(0xFF00678D),
+                          shape: OvalBorder(),
+                        ),
+                        child: Image.asset(
+                          'assets/images/Titik3.png',
+                          scale: 4,
+                        ),
+                      ),
+                      const SizedBox(width: 13)
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 17),
@@ -321,9 +365,7 @@ class HomeContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                  name: name,
-                                ),
+                                builder: (context) => SearchScreen(),
                               ),
                             );
                           },
@@ -388,8 +430,8 @@ class HomeContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                  name: name,
+                                builder: (context) => MentorScreen(
+                                  mentorList: mentor,
                                 ),
                               ),
                             );
@@ -432,18 +474,18 @@ class HomeContent extends StatelessWidget {
                   ),
                   const SizedBox(height: 17),
                   SizedBox(
-                    height: 223,
+                    height: 195,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: skillBoostList.length,
                       itemBuilder: (context, index) {
                         final skillBoost = skillBoostList[index];
                         return Container(
-                          width: 172,
+                          width: 150,
                           margin: const EdgeInsets.only(right: 12),
                           child: Material(
                             color: Colors.white,
-                            elevation: 1,
+                            elevation: 4,
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
                               onTap: () {
@@ -475,48 +517,47 @@ class HomeContent extends StatelessWidget {
                                   const SizedBox(height: 4),
                                   Column(
                                     children: [
-                                      Container(
-                                        margin: const EdgeInsets.all(6),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8),
                                         child: Text(
-                                          skillBoost.title,
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
+                                            skillBoost.title,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
-                                        ),
                                       ),
-                                      Container(
-                                        margin:
-                                            EdgeInsets.symmetric(horizontal: 4),
-                                        child: Row(
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 7),
+                                        child: Column(
                                           children: [
-                                            Image.asset(
-                                              'assets/images/Course.png',
-                                              width: 14,
-                                              height: 14,
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/Course.png',
+                                                  width: 14,
+                                                  height: 14,
+                                                ),
+                                                Text(skillBoost.materi),
+                                              ],
                                             ),
-                                            Text(skillBoost.materi),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/Star.png',
+                                                  width: 14,
+                                                  height: 14,
+                                                ),
+                                                SizedBox(
+                                                  width: 4,
+                                                ),
+                                                Text(skillBoost.review),
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),
-                                      Container(
-                                        margin:
-                                            EdgeInsets.symmetric(horizontal: 4),
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/images/Star.png',
-                                              width: 14,
-                                              height: 14,
-                                            ),
-                                            SizedBox(
-                                              width: 4,
-                                            ),
-                                            Text(skillBoost.review),
-                                          ],
-                                        ),
-                                      )
                                     ],
                                   ),
                                 ],

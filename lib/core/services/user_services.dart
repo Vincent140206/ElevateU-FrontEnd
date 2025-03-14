@@ -127,7 +127,7 @@ class UserServices {
       if (response.statusCode == 204) {
         debugPrint("Delete Avatar Berhasil");
       } else {
-        debugPrint(" Gagal hapus avatar: ${response.statusCode}");
+        debugPrint("Gagal hapus avatar: ${response.statusCode}");
         throw Exception("Gagal hapus avatar pengguna: ${response.statusCode}");
       }
     } catch (e) {

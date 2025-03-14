@@ -8,10 +8,11 @@ import '../homeScreen/lists/mentorList.dart';
 import '../homeScreen/lists/skillBoostList.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
+  TextEditingController searchController = TextEditingController();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
@@ -58,7 +59,8 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Column(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(10)),
                     child: Image.asset(
                       skboost.imagePath,
                       height: 114,
@@ -73,7 +75,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       children: [
                         Text(
                           skboost.title,
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -90,9 +93,15 @@ class _SearchScreenState extends State<SearchScreen> {
                             Expanded(
                               child: Text(
                                 skboost.materi,
-                                style: TextStyle(overflow: TextOverflow.ellipsis),
+                                style: TextStyle(
+                                  color: Color(0xFF5B5B5B),
+                                  fontSize: 12,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.50,
+                                ),
                               ),
-                            ),
+                            )
                           ],
                         ),
                         SizedBox(height: 4),
@@ -106,11 +115,16 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                             SizedBox(width: 8),
                             Expanded(
-                              child: Text(
-                                skboost.review,
-                                style: TextStyle(overflow: TextOverflow.ellipsis),
+                                child: Text(
+                              skboost.review,
+                              style: TextStyle(
+                                color: Color(0xFF5B5B5B),
+                                fontSize: 12,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                                height: 1.50,
                               ),
-                            ),
+                            )),
                           ],
                         ),
                       ],
@@ -172,8 +186,26 @@ class _SearchScreenState extends State<SearchScreen> {
                   Center(
                     child: Column(
                       children: [
-                        Text(scList.Title),
-                        Text(scList.Challenge),
+                        Text(
+                          scList.Title,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 1.50,
+                          ),
+                        ),
+                        Text(
+                          scList.Challenge,
+                          style: TextStyle(
+                            color: Color(0xFF7C7C7C),
+                            fontSize: 12,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            height: 1.50,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -195,7 +227,12 @@ class _SearchScreenState extends State<SearchScreen> {
           final mentor = mentorList[index];
           return InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MentorScreen(mentorList: mentor,)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MentorScreen(
+                            mentorList: mentor,
+                          )));
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -293,16 +330,46 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
-              child: TextFields(
-                controller: searchController,
-                hintText: 'Cari Skillmu disini',
-                obscureText: false,
-                color: Colors.transparent,
-                borderColor: Color(0xFF4D86CD),
-                enabled: true,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFFE7F0FB),
+                  border: Border.all(color: Color(0xFF4D86CD)),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    // Search Icon
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Icon(
+                        Icons.search,
+                        color: Color(0xFF4D86CD),
+                      ),
+                    ),
+                    // TextField
+                    Expanded(
+                      child: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Cari Skillmu disini',
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    // Clear Button
+                    IconButton(
+                      icon: Icon(Icons.clear),
+                      color: Color(0xFF4D86CD),
+                      onPressed: () {
+                        searchController.clear();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(height: 21),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -317,7 +384,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: Text(
                       'Skill Boost',
                       style: TextStyle(
-                        color: selectedCategory == 'Skill Boost' ? Colors.blue : Colors.black,
+                        color: selectedCategory == 'Skill Boost'
+                            ? Colors.blue
+                            : Colors.black,
                       ),
                     ),
                   ),
@@ -331,7 +400,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: Text(
                       'Skill Challenge',
                       style: TextStyle(
-                        color: selectedCategory == 'Skill Challenge' ? Colors.blue : Colors.black,
+                        color: selectedCategory == 'Skill Challenge'
+                            ? Colors.blue
+                            : Colors.black,
                       ),
                     ),
                   ),
@@ -345,7 +416,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: Text(
                       'Skill Guidance',
                       style: TextStyle(
-                        color: selectedCategory == 'Skill Guidance' ? Colors.blue : Colors.black,
+                        color: selectedCategory == 'Skill Guidance'
+                            ? Colors.blue
+                            : Colors.black,
                       ),
                     ),
                   ),
@@ -356,8 +429,8 @@ class _SearchScreenState extends State<SearchScreen> {
               child: selectedCategory == 'Skill Boost'
                   ? skillBoost()
                   : selectedCategory == 'Skill Challenge'
-                  ? skillChallenge()
-                  : skillGuidance(),
+                      ? skillChallenge()
+                      : skillGuidance(),
             ),
           ],
         ),

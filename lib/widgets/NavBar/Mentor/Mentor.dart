@@ -40,7 +40,7 @@ class _MentorChatState extends State<MentorChat> {
                     },
                     child: Container(
                       width: double.maxFinite,
-                      height: 76,
+                      height: 92,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -69,7 +69,7 @@ class _MentorChatState extends State<MentorChat> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      SizedBox(height: 4),
+                                      SizedBox(height: 2),
                                       Text(
                                         mentor.speciality,
                                         style: TextStyle(
@@ -77,11 +77,14 @@ class _MentorChatState extends State<MentorChat> {
                                           color: Colors.grey,
                                         ),
                                       ),
+                                      SizedBox(height: 2,),
+                                      Text('Kamu bisa menggunakan beberapa ...')
                                     ],
                                   ),
                                 ),
                               ],
                             ),
+                            Divider()
                           ],
                         ),
                       ),

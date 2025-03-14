@@ -34,9 +34,9 @@ class _ScDifficultyState extends State<ScDifficulty> {
                         height: 24,
                       ),
                     ),
-                    SizedBox(width: 84),
+                    SizedBox(width: 98),
                     Text(
-                      'Advanced',
+                      'Beginner',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,

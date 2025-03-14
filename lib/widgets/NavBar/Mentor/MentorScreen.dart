@@ -1,4 +1,5 @@
 import 'package:elevateu_bcc_new/widgets/ElevatedButton.dart';
+import 'package:elevateu_bcc_new/widgets/NavBar/Mentor/Chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../features/Premium/Premium.dart';
@@ -344,10 +345,15 @@ class _MentorScreenState extends State<MentorScreen> {
                               SizedBox(height: 30,),
                               Row(
                                 children: [
-                                  Image.asset(
-                                      'assets/images/Chat.png',
-                                    width: 48,
-                                    height: 48,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
+                                    },
+                                    child: Image.asset(
+                                        'assets/images/Chat.png',
+                                      width: 48,
+                                      height: 48,
+                                    ),
                                   ),
                                   SizedBox(width: 10,),
                                   Elevatedbutton1(
