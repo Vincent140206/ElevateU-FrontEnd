@@ -19,4 +19,6 @@ class ApiConstant {
 
   // CATEGORY
   static const String newCategory = "$baseUrl/categories";
+  static const String getCategory = "$baseUrl/categories";
+  static const String updateCategory = "$baseUrl/categories/";
 }

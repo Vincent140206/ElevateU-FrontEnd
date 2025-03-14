@@ -1,3 +1,4 @@
+import 'package:elevateu_bcc_new/widgets/NavBar/homeScreen/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../widgets/PopUp.dart';
@@ -233,6 +234,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
+                        SizedBox(height: 30,),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(name: '')));
+                            },
+                            child: Text('Testing')
+                        )
                       ],
                     ),
                   ),

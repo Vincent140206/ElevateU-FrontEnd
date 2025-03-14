@@ -1,7 +1,9 @@
 import 'package:dio/src/dio.dart';
+import 'package:elevateu_bcc_new/core/services/category_services.dart';
 import 'package:elevateu_bcc_new/core/services/local_storage_service.dart';
 import 'package:elevateu_bcc_new/core/services/user_services.dart';
 import 'package:elevateu_bcc_new/features/auth/bloc/auth_bloc.dart';
+import 'package:elevateu_bcc_new/features/category/bloc/category_bloc.dart';
 import 'package:elevateu_bcc_new/features/user/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +38,9 @@ void main() async {
         ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(Dio(), localStorageService),
+        ),
+        BlocProvider<CategoryBloc>(
+            create: (context) => CategoryBloc(Dio(), CategoryServices()),
         ),
       ],
       child: MyApp(),

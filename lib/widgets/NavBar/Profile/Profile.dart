@@ -1,9 +1,9 @@
+import 'package:elevateu_bcc_new/admin/mentor.dart';
 import 'package:elevateu_bcc_new/core/services/local_storage_service.dart';
 import 'package:elevateu_bcc_new/features/auth/bloc/auth_event.dart';
 import 'package:elevateu_bcc_new/features/auth/view/LoginScreen.dart';
 import 'package:elevateu_bcc_new/features/user/bloc/user_bloc.dart';
 import 'package:elevateu_bcc_new/features/user/bloc/user_event.dart';
-import 'package:elevateu_bcc_new/features/user/bloc/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../features/auth/bloc/auth_bloc.dart';
@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return Text('Error: ${snapshot.error}');
                       } else {
                         final userData = snapshot.data;
-                        String avatarUrl = userData?['avatarUrl'] ??
+                        String avatarUrl = userData?['avatar_url'] ??
                             'assets/images/Rafael.png';
                         return Row(
                           children: [

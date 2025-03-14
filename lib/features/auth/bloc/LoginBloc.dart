@@ -30,25 +30,40 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           final user = data['user'];
 
           await localStorageService.saveBearerToken(accessToken);
+          debugPrint(accessToken);
 
           await localStorageService.saveToken(accessToken, refreshToken);
           await localStorageService.saveUserDataLoggedIn(
-              user['id'],
-              user['name'],
-              user['email'],
-              user['role'],
-              user['avatar_url'],
-              user['student']['instance'],
-              user['student']['major']
+            user['id'],
+            user['name'],
+            user['email'],
+            user['role'],
+            user['avatar_url'],
+            user['student']['instance'],
+            user['student']['major'],
           );
           debugPrint('Simpan data sukses!');
           emit(LoginSuccess());
         } else if (response.statusCode == 401) {
           emit(LoginFailure(error: 'Login gagal, silakan coba lagi.'));
+        } else {
+          emit(LoginFailure(error: 'Login gagal dengan status: ${response.statusCode}'));
         }
       } catch (e) {
-        debugPrint('Error : ${e.toString()}');
-        emit(LoginFailure(error: 'Terjadi kesalahan, ${e.toString()} silakan coba lagi.'));
+        debugPrint('Error: ${e.toString()}');
+
+        String errorMessage;
+        if (e is DioException) {
+          if (e.response != null) {
+            debugPrint('Dio error response data: ${e.response?.data}');
+            errorMessage = 'Dio error: ${e.response?.data}';
+          } else {
+            errorMessage = 'Dio error: ${e.message}';
+          }
+        } else {
+          errorMessage = 'Terjadi kesalahan, ${e.toString()} silakan coba lagi.';
+        }
+        emit(LoginFailure(error: errorMessage));
       }
     });
   }

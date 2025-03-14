@@ -141,7 +141,7 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                     ).then((_) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(builder: (context) => HomeScreen(name: '',)),
                       );
                     });
                   },

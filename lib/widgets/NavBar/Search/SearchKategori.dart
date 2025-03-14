@@ -49,12 +49,12 @@ class _SearchKategoriState extends State<SearchKategori> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          // Handle tap
+
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center, // Center the content vertically
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Image.asset(
                                 kategori.iconPath,

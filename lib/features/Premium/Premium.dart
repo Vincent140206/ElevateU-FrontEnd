@@ -95,7 +95,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(name: '',)));
                   },
                   child: Text('Coba Gratis'),
                 ),

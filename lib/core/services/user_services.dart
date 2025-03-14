@@ -1,12 +1,9 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:elevateu_bcc_new/core/constant/api_constant.dart';
-import 'package:elevateu_bcc_new/features/user/bloc/user_event.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
-import '../../features/user/bloc/user_bloc.dart';
-import '../../features/user/bloc/user_state.dart';
 import 'local_storage_service.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,9 +15,9 @@ class UserServices {
     dio.options.headers['Authorization'] = 'Bearer $token';
   }
 
-  Future<void> deleteUser () async {
+  Future<void> deleteUser() async {
     try {
-      final response = await dio.delete(ApiConstant.deleteUser );
+      final response = await dio.delete(ApiConstant.deleteUser);
       if (response.statusCode == 204) {
         debugPrint("Sukses delete user");
       }
@@ -29,7 +26,7 @@ class UserServices {
     }
   }
 
-  Future<void> getUser () async {
+  Future<void> getUser() async {
     try {
       final response = await dio.get(ApiConstant.getUser );
       if (response.statusCode == 200) {
@@ -105,7 +102,15 @@ class UserServices {
         } else {
           throw Exception('Invalid response format');
         }
-      } else {
+      } if(response.statusCode == 413){
+        ScaffoldMessenger.of(path.context as BuildContext).showSnackBar(
+          SnackBar(
+            content: Text('File too large. Please select a smaller image.'),
+            backgroundColor: Colors.black12,
+          ),
+        );
+        throw Exception('File too large');
+      } else{
         debugPrint('Upload failed with status code: ${response.statusCode}');
         throw Exception('Upload failed with status code: ${response.statusCode}');
       }

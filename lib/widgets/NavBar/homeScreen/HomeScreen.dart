@@ -1,4 +1,6 @@
+import 'package:elevateu_bcc_new/widgets/NavBar/Search/Search.dart';
 import 'package:flutter/material.dart';
+import '../../../core/services/local_storage_service.dart';
 import '../../../features/skillBoost/RekomendasiSkillBoost.dart';
 import '../../../features/skillBoost/SkillBoostScreen.dart';
 import '../../../features/skillChallenge/SkillChallengeWidget.dart';
@@ -6,7 +8,6 @@ import '../../../features/skillGuidance/SkillGuidanceWidget.dart';
 import '../Course/Course.dart';
 import '../Mentor/Mentor.dart';
 import '../Profile/Profile.dart';
-import '../Search/Search.dart';
 import 'lists/kategoriList.dart';
 import 'lists/mentorList.dart';
 import 'lists/rekomendasiList.dart';
@@ -15,7 +16,9 @@ import 'lists/skillChallengeList.dart';
 import 'lists/skillUpgradeList.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String name;
+
+  const HomeScreen({super.key, required this.name});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,13 +27,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeContent(),
-    const SkillGuidanceWidget(),
-    const MentorChat(),
-    const CourseScreen(),
-    const ProfileScreen()
-  ];
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void onItemTapped(int index) {
     setState(() {
@@ -42,7 +42,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: _screens[selectedIndex],
+      body: FutureBuilder<Map<String, String?>>(
+        future: LocalStorageService().getUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            String name = snapshot.data?['name'] ?? "User    ";
+            return _screens[selectedIndex](name);
+          } else {
+            return Center(child: Text('No data found'));
+          }
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         items: <BottomNavigationBarItem>[
@@ -98,9 +112,20 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  List<Widget Function(String)> get _screens => [
+        (name) => HomeContent(name: name),
+        (name) => const SearchScreen(),
+        (name) => const MentorChat(),
+        (name) => const CourseScreen(),
+        (name) => const ProfileScreen(),
+      ];
 }
+
 class HomeContent extends StatelessWidget {
-  const HomeContent({super.key});
+  final String name;
+  const HomeContent({super.key, required this.name});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +135,7 @@ class HomeContent extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20, right: 20, top: 81),
           child: Column(
             children: [
-              const SizedBox(
+              SizedBox(
                 width: 365,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +145,7 @@ class HomeContent extends StatelessWidget {
                         children: [
                           Flexible(
                             child: Text(
-                              'Let’s Elevate Your \nSkill Rafael ',
+                              "Let’s Elevate Your \nSkill $name",
                               style: TextStyle(
                                 color: Color(0xFF141414),
                                 fontSize: 30,
@@ -296,7 +321,9 @@ class HomeContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
+                                builder: (context) => HomeScreen(
+                                  name: name,
+                                ),
                               ),
                             );
                           },
@@ -337,11 +364,14 @@ class HomeContent extends StatelessWidget {
                       ),
                       const Spacer(),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SkillGuidanceWidget()));
-                        },
-                          child: Text('Selengkapnya')
-                      ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SkillGuidanceWidget()));
+                          },
+                          child: Text('Selengkapnya')),
                     ],
                   ),
                   const SizedBox(height: 4),
@@ -358,7 +388,9 @@ class HomeContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
+                                builder: (context) => HomeScreen(
+                                  name: name,
+                                ),
                               ),
                             );
                           },
@@ -389,12 +421,13 @@ class HomeContent extends StatelessWidget {
                       const Spacer(),
                       GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => RekomendasiSkillBoost()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RekomendasiSkillBoost()));
                           },
-                          child: Text(
-                              'Selengkapnya'
-                          )
-                      )
+                          child: Text('Selengkapnya'))
                     ],
                   ),
                   const SizedBox(height: 17),
@@ -417,7 +450,9 @@ class HomeContent extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => SkillBoostScreen(sboost: skillBoost,),
+                                    builder: (context) => SkillBoostScreen(
+                                      sboost: skillBoost,
+                                    ),
                                   ),
                                 );
                               },
@@ -452,7 +487,8 @@ class HomeContent extends StatelessWidget {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.symmetric(horizontal: 4),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 4),
                                         child: Row(
                                           children: [
                                             Image.asset(
@@ -465,7 +501,8 @@ class HomeContent extends StatelessWidget {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.symmetric(horizontal: 4),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 4),
                                         child: Row(
                                           children: [
                                             Image.asset(
@@ -473,7 +510,9 @@ class HomeContent extends StatelessWidget {
                                               width: 14,
                                               height: 14,
                                             ),
-                                            SizedBox(width: 4,),
+                                            SizedBox(
+                                              width: 4,
+                                            ),
                                             Text(skillBoost.review),
                                           ],
                                         ),
@@ -494,13 +533,14 @@ class HomeContent extends StatelessWidget {
                       Text('Skill Challenge'),
                       const Spacer(),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SkillChallengeWidget()));
-                        },
-                          child: Text(
-                              'Selengkapnya'
-                          )
-                      )
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SkillChallengeWidget()));
+                          },
+                          child: Text('Selengkapnya'))
                     ],
                   ),
                   const SizedBox(height: 4),
@@ -516,7 +556,9 @@ class HomeContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
+                                builder: (context) => HomeScreen(
+                                  name: name,
+                                ),
                               ),
                             );
                           },
@@ -572,7 +614,9 @@ class HomeContent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     children: [
                       Text('Skill Upgrade'),
@@ -580,7 +624,9 @@ class HomeContent extends StatelessWidget {
                       Text('Selengkapnya')
                     ],
                   ),
-                  SizedBox(height: 17,),
+                  SizedBox(
+                    height: 17,
+                  ),
                   SizedBox(
                     height: 260,
                     child: ListView.builder(
@@ -593,7 +639,9 @@ class HomeContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
+                                builder: (context) => HomeScreen(
+                                  name: name,
+                                ),
                               ),
                             );
                           },
@@ -622,10 +670,12 @@ class HomeContent extends StatelessWidget {
                                   Container(
                                     width: double.infinity,
                                     height: 148,
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
-                                        image: AssetImage(skillUpgrade.imagePath),
+                                        image:
+                                            AssetImage(skillUpgrade.imagePath),
                                         fit: BoxFit.cover,
                                       ),
                                       borderRadius: BorderRadius.circular(10),
@@ -633,11 +683,14 @@ class HomeContent extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 12),
                                   Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 14),
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 14),
                                     height: 100,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: double.infinity,
@@ -657,13 +710,16 @@ class HomeContent extends StatelessWidget {
                                             Image.asset(
                                                 'assets/images/Tanggal.png',
                                                 width: 17,
-                                                height: 17
+                                                height: 17),
+                                            SizedBox(
+                                              width: 9,
                                             ),
-                                            SizedBox(width: 9,),
                                             Text(skillUpgrade.tanggal),
                                           ],
                                         ),
-                                        SizedBox(height: 5,),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
                                         Row(
                                           children: [
                                             Container(
@@ -672,7 +728,10 @@ class HomeContent extends StatelessWidget {
                                               padding: const EdgeInsets.all(10),
                                               decoration: ShapeDecoration(
                                                 color: Color(0xFFF2F2F2),
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
                                               ),
                                               child: Text(
                                                 'Umum',
@@ -698,7 +757,9 @@ class HomeContent extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Row(
@@ -707,12 +768,13 @@ class HomeContent extends StatelessWidget {
                         const Spacer(),
                         GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => RekomendasiSkillBoost()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          RekomendasiSkillBoost()));
                             },
-                            child: Text(
-                                'Selengkapnya'
-                            )
-                        )
+                            child: Text('Selengkapnya'))
                       ],
                     ),
                   ),
@@ -728,7 +790,9 @@ class HomeContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
+                                builder: (context) => HomeScreen(
+                                  name: name,
+                                ),
                               ),
                             );
                           },
@@ -775,8 +839,10 @@ class HomeContent extends StatelessWidget {
                                     width: 210,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: double.infinity,
@@ -794,20 +860,25 @@ class HomeContent extends StatelessWidget {
                                         const SizedBox(height: 7),
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Container(
                                               width: 18,
                                               height: 18,
                                               decoration: ShapeDecoration(
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(50),
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
                                                 ),
                                               ),
                                               child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(50),
-                                                child: Image.asset(rekomenList.mentorImagePath),
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                child: Image.asset(rekomenList
+                                                    .mentorImagePath),
                                               ),
                                             ),
                                             const SizedBox(width: 9),
@@ -846,7 +917,9 @@ class HomeContent extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(height: 23,)
+                  SizedBox(
+                    height: 23,
+                  )
                 ],
               ),
             ],

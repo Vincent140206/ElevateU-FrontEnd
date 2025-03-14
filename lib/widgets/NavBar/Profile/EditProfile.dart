@@ -77,15 +77,21 @@ class _EditProfileState extends State<EditProfile> {
                 Navigator.of(context).pop();
                 userServices.pickImageAndUpdateAvatar(
                   context,
-                      (imageUrl) {
-                    context.read<UserBloc>().add(UserAvatarUpdated(imageUrl) as UserEvent);
+                  (imageUrl) {
+                    context
+                        .read<UserBloc>()
+                        .add(UserAvatarUpdated(imageUrl) as UserEvent);
                     localStorageService.saveUserProfileImageUrl(imageUrl);
                     setState(() {
                       this.imageUrl = imageUrl;
+                      loadUserData();
                     });
+                    loadUserData();
                   },
-                      (error) {
-                    context.read<UserBloc>().add(UserFailure(error) as UserEvent);
+                  (error) {
+                    context
+                        .read<UserBloc>()
+                        .add(UserFailure(error) as UserEvent);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(error)),
                     );
@@ -152,67 +158,69 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 100,
-                        child: Center(
-                          child: imageUrl == null || imageUrl!.isEmpty
-                              ? Image.asset(
-                            'assets/images/Rafael.png', // Default image
-                            width: 87,
-                            height: 87,
-                          )
-                              : ClipOval(
-                            child: imageUrl!.startsWith('http')
-                                ? Image.network(
-                              imageUrl!,
-                              width: 87,
-                              height: 87,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
-                                  'assets/images/Rafael.png', // Fallback image on error
-                                  width: 87,
-                                  height: 87,
-                                );
-                              },
-                            )
-                                : Image.file(
-                              File(imageUrl!),
-                              width: 87,
-                              height: 87,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                  Center(
+                    child: Stack(
+                      children: [
+                        FutureBuilder<Map<String, String?>>(
+                          future: localStorageService.getUserData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                  child: Text('Error: ${snapshot.error}'));
+                            } else {
+                              final userData = snapshot.data;
+                              String avatarUrl = userData?['avatar_url'] ??
+                                  'assets/images/Rafael.png';
+                              return Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: ClipOval(
+                                  child: Image.network(
+                                    avatarUrl,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                          'assets/images/Rafael.png');
+                                    },
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
-                      ),
-                      Positioned(
-                        top: 70,
-                        left: 170,
-                        child: Container(
-                          width : 25,
-                          height: 25,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[300],
-                          ),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                _showAvatarOptionsDialog(context);
-                              },
-                              icon: Image.asset(
-                                'assets/images/Kamera.png',
-                                width: 30,
-                                height: 28,
-                                color: Colors.black,
+                        Positioned(
+                          top: 75,
+                          left: 65,
+                          child: Container(
+                            width: 25,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey[300],
+                            ),
+                            child: Center(
+                              child: IconButton(
+                                onPressed: () {
+                                  _showAvatarOptionsDialog(context);
+                                },
+                                icon: Image.asset(
+                                  'assets/images/Kamera.png',
+                                  width: 30,
+                                  height: 28,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                   Text('Nama'),
                   SizedBox(height: 12),
@@ -245,7 +253,8 @@ class _EditProfileState extends State<EditProfile> {
                       color: Color(0XFFF1F3FF),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 15),
                       child: Text(role),
                     ),
                   ),
@@ -292,13 +301,13 @@ class _EditProfileState extends State<EditProfile> {
                       String jurusan = jurusanController.text;
 
                       context.read<UserBloc>().add(PatchUserRequested(
-                        name: name,
-                        email: email,
-                        role: role,
-                        universitas: universitas,
-                        jurusan: jurusan,
-                        password: '',
-                      ));
+                            name: name,
+                            email: email,
+                            role: role,
+                            universitas: universitas,
+                            jurusan: jurusan,
+                            password: '',
+                          ));
                     },
                     width: double.infinity,
                     height: 48,
