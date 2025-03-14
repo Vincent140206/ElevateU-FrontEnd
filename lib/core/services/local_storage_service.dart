@@ -146,10 +146,8 @@ class LocalStorageService {
   Future<Map<String, String?>> getCategory(String id, String name) async {
     final prefs = await SharedPreferences.getInstance();
     String? id = prefs.getString('id');
-    String? name = prefs.getString('name');
     return {
       'id': id,
-      'name': name,
     };
   }
 }

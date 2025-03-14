@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:elevateu_bcc_new/core/constant/api_constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
@@ -12,6 +13,7 @@ class Api {
   static Future<Api> create() async {
     final api = Api._();
     api.prefs = await SharedPreferences.getInstance();
+    api.accessToken = api.prefs.getString('accessToken');
     api._init();
     return api;
   }
@@ -20,12 +22,14 @@ class Api {
     api.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         options.headers['Authorization'] = 'Bearer $accessToken';
+        debugPrint('Request: ${options.method} ${options.path} with headers: ${options.headers}');
         return handler.next(options);
       },
       onError: (DioException error, handler) async {
-        if ((error.response?.statusCode == 401 &&
-            error.response?.data['message'] == "Auth session is invalid. Please login again.")) {
-          if (await prefs.containsKey('refreshKey')) {
+        debugPrint('Error: ${error.response?.statusCode} ${error.response?.data}');
+        if (error.response?.statusCode == 401 &&
+            error.response?.data['message'] == "Auth session is invalid. Please login again.") {
+          if (await prefs.containsKey('refreshToken')) {
             await refreshToken();
             return handler.resolve(await retry(error.requestOptions));
           }
@@ -50,6 +54,7 @@ class Api {
 
   Future<void> refreshToken() async {
     final refreshToken = await prefs.getString('refreshToken');
+    debugPrint('Refreshing token with refresh token: $refreshToken');
     final response = await api.post(
       ApiConstant.refresh,
       data: {
@@ -59,12 +64,16 @@ class Api {
 
     try {
       if (response.statusCode == 201) {
-        accessToken = response.data;
+        accessToken = response.data['access_token'];
+        await prefs.setString('accessToken', accessToken!);
+        debugPrint('New access token: $accessToken');
       } else {
         accessToken = null;
+        debugPrint('Failed to refresh token: ${response.data}');
       }
     } catch (e) {
-      throw Exception('error');
+      debugPrint('Error refreshing token: $e');
+      throw Exception('Error refreshing token');
     }
   }
 }

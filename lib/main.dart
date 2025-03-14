@@ -4,6 +4,8 @@ import 'package:elevateu_bcc_new/core/services/local_storage_service.dart';
 import 'package:elevateu_bcc_new/core/services/user_services.dart';
 import 'package:elevateu_bcc_new/features/auth/bloc/auth_bloc.dart';
 import 'package:elevateu_bcc_new/features/category/bloc/category_bloc.dart';
+import 'package:elevateu_bcc_new/features/skillChallenge/bloc/scBloc.dart';
+import 'package:elevateu_bcc_new/features/skillChallenge/bloc/scServices.dart';
 import 'package:elevateu_bcc_new/features/user/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +20,7 @@ import 'package:elevateu_bcc_new/core/services/api.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   UserServices userServices = UserServices();
+  SCServices scServices = SCServices();
   LocalStorageService localStorageService = LocalStorageService();
   Api api = await Api.create();
 
@@ -42,6 +45,8 @@ void main() async {
         BlocProvider<CategoryBloc>(
             create: (context) => CategoryBloc(Dio(), CategoryServices()),
         ),
+        BlocProvider<SkillChallengeBloc>(
+            create: (context) => SkillChallengeBloc(Dio(), localStorageService, scServices))
       ],
       child: MyApp(),
     ),

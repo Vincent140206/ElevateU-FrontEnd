@@ -44,6 +44,9 @@ class CategoryServices {
           String id = categories[0]['id'];
           String name = categories[0]['name'];
 
+          debugPrint(id);
+          debugPrint(name);
+
           await localStorageService.saveCategory(id, name);
           debugPrint("Category berhasil di get dan disimpan: id = $id, name = $name");
         } else {

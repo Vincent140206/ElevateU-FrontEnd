@@ -21,4 +21,9 @@ class ApiConstant {
   static const String newCategory = "$baseUrl/categories";
   static const String getCategory = "$baseUrl/categories";
   static const String updateCategory = "$baseUrl/categories/";
+
+  // Challenge
+  static const String createSC = "$baseUrl/challenges";
+  static const String getSC = "$baseUrl/challenges";
+  static const String createSCG = "$baseUrl/challenge-groups";
 }

@@ -1,3 +1,4 @@
+import 'package:elevateu_bcc_new/admin.dart';
 import 'package:elevateu_bcc_new/admin/mentor.dart';
 import 'package:elevateu_bcc_new/core/services/local_storage_service.dart';
 import 'package:elevateu_bcc_new/features/auth/bloc/auth_event.dart';
@@ -379,61 +380,99 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 34,
                   ),
                   GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Konfirmasi Hapus Akun'),
-                              content: const Text(
-                                  'Apakah Anda yakin ingin menghapus akun ini?'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Batal'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    BlocProvider.of<UserBloc>(context).add(DeleteUserRequested());
-                                  },
-                                  child: const Text('Hapus'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 30,
-                            height: 30,
-                            decoration: ShapeDecoration(
-                              color: Color(0x4C87B4EC),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Konfirmasi Hapus Akun'),
+                            content: const Text(
+                                'Apakah Anda yakin ingin menghapus akun ini?'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Batal'),
                               ),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.delete_forever,
-                                size: 19,
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  BlocProvider.of<UserBloc>(context)
+                                      .add(DeleteUserRequested());
+                                },
+                                child: const Text('Hapus'),
                               ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 30,
+                          height: 30,
+                          decoration: ShapeDecoration(
+                            color: Color(0x4C87B4EC),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
-                          const SizedBox(width: 20),
-                          Text('Delete Account'),
-                          Spacer(),
-                          Icon(Icons.navigate_next_sharp, size: 30),
-                        ],
-                      )
+                          child: Center(
+                            child: Icon(
+                              Icons.delete_forever,
+                              size: 19,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Text('Delete Account'),
+                        Spacer(),
+                        Icon(Icons.navigate_next_sharp, size: 30),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 34,),
+                  SizedBox(height: 30,),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminScreen()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 30,
+                          height: 30,
+                          decoration: ShapeDecoration(
+                            color: Color(0x4C87B4EC),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.info_outline,
+                              size: 19,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Text('Admin'),
+                        Spacer(),
+                        Icon(
+                          Icons.navigate_next_sharp,
+                          size: 30,
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 34,
+                  ),
                 ],
               )
             ],
