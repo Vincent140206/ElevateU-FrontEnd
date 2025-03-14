@@ -1,4 +1,4 @@
-import 'package:elevateu_bcc_new/Leaderboard.dart';
+import 'package:elevateu_bcc_new/widgets/NavBar/homeScreen/Leaderboard.dart';
 import 'package:elevateu_bcc_new/widgets/NavBar/Mentor/MentorScreen.dart';
 import 'package:elevateu_bcc_new/widgets/NavBar/Search/Search.dart';
 import 'package:flutter/material.dart';
